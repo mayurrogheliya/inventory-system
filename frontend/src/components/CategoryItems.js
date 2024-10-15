@@ -1,19 +1,58 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 
 const CategoryItems = () => {
+
+  const [categorys, setCategorys] = useState([])
+
+  const getDetails = async () => {
+    await axios.get("http://localhost:5000/api/categories/getCategory")
+      .then(response => setCategorys(response.data));
+  }
+
+  useEffect(() => {
+    getDetails();
+  }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/api/categories/deleteCategory/${id}`);
+      getDetails();
+    } catch (error) {
+      console.log("Error while deleting category: ", error);
+    }
+  }
+
   return (
     <div>
       <div className='md:mx-5 md:px-4 sm:mx-4 sm:px-3 mx-3 px-2'>
         <h1 className='font-bold sm:text-3xl text-2xl'>Available Category</h1>
-        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8 my-5'>
-          <div className='bg-gray-200 rounded-md border border-slate-500 shadow-lg max-w-sm mx-auto transform hover:scale-105 transition-transform duration-30'>
-            <div className='md:p-3 sm:p-3 p-2'>
-              <img className='w-full h-36 object-cover rounded' src="https://photosqn.com/wp-content/uploads/2024/05/radha-krishna-wallpapers-hd-download_0.webp" alt="images" />
-              <p className='sm:text-xl text-lg font-bold pt-1'>Catergory</p>
-              <p className='text-base font-serif'>Status: Active</p>
-            </div>
-          </div>
-        </div>
+        <table className='table table-auto border-collapse border border-slate-500 w-full my-5'>
+          <thead>
+            <tr>
+              <th className='border border-slate-600'>Name</th>
+              <th className='border border-slate-600'>Image</th>
+              <th className='border border-slate-600'>Status</th>
+              <th className='border border-slate-600 w-80'>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {categorys.map((item) =>
+              <tr key={item.id}>
+                <td className='border border-slate-700 sm:px-2 px-1'>{item.name}</td>
+                <td className='border border-slate-700 py-1 sm:px-2 px-1'>
+                  <img className='w-14 h-14 rounded-sm' src={item.image} alt="images" />
+                </td>
+                <td className='border border-slate-700 px-2'>{item.status}</td>
+                <td className='border border-slate-700 px-2'>
+                  <button className='m-1 bg-green-500 hover:bg-green-600 text-white rounded-md sm:px-4 px-2 py-1'>Edit</button>
+                  <button className='m-1 bg-red-500 hover:bg-red-600 text-white rounded-md sm:px-4 px-2 py-1' onClick={() => handleDelete(item.id)}>Delete</button>
+                </td>
+              </tr>
+            )}
+          </tbody>
+
+        </table>
       </div>
     </div>
   )
