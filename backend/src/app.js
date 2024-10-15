@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import path from 'path';
 
 const app = express();
 
@@ -17,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // middleware for handling images
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
 import categoryRouter from './routes/category.routes.js';
 
