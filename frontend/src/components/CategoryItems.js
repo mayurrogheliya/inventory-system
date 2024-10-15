@@ -41,7 +41,7 @@ const CategoryItems = () => {
               <tr key={item.id}>
                 <td className='border border-slate-700 sm:px-2 px-1'>{item.name}</td>
                 <td className='border border-slate-700 py-1 sm:px-2 px-1'>
-                  <img className='w-14 h-14 rounded-sm' src={item.image} alt="images" />
+                  <img className='w-14 h-14 rounded-sm' src={`http://localhost:5000/${item.image}`} alt="images" />
                 </td>
                 <td className='border border-slate-700 px-2'>{item.status}</td>
                 <td className='border border-slate-700 px-2'>

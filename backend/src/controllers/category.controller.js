@@ -15,7 +15,7 @@ const addCategory = async (req, res) => {
             return res.status(400).json({ message: "Image is required" });
         }
 
-        const imagePath = req.file ? req.file.filename : "";
+        const imagePath = req.file ? `images/${req.file.filename}` : "";
 
         const newCategory = await CategoryDetail.create({
             name: name,
