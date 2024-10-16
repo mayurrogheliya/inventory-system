@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addCategory, deleteCategory, getCategory } from "../controllers/category.controller.js";
+import { addCategory, deleteCategory, getCategory, updateCategory } from "../controllers/category.controller.js";
 import { upoload } from "../middlewares/multer.middleware.js";
 
 const router = Router();
@@ -7,10 +7,13 @@ const router = Router();
 // create a new category
 router.route('/addCategory').post(upoload.single('image'), addCategory);
 
-// get the category
+// get category
 router.route('/getCategory').get(getCategory);
 
-// delete the category
+// delete category
 router.route('/deleteCategory/:id').delete(deleteCategory);
+
+// edit category
+router.route('/updateCategory/:id').put(upoload.single('image'), updateCategory);
 
 export default router;

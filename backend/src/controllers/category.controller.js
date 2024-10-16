@@ -56,4 +56,32 @@ const deleteCategory = async (req, res) => {
     }
 }
 
-export { addCategory, getCategory, deleteCategory };
+const updateCategory = async (req, res) => {
+    try {
+        // Find the category first to ensure it exists
+        const category = await CategoryDetail.findByPk(req.params.id);
+
+        if (!category) {
+            return res.status(404).json({ message: 'Category not found' });
+        }
+
+        // Prepare updated data
+        const updatedData = {
+            name: req.body.name || category.name,
+            status: req.body.status || category.status,
+            image: req.file ? `images/${req.file.filename}` : category.image // Only update if a new image is provided
+        };
+
+        // Update the category with the new data
+        await category.update(updatedData);
+
+        res.status(200).json({ message: 'Category updated successfully', category });
+    } catch (error) {
+        console.error("Error while updating category: ", error);
+        res.status(500).json({ message: 'Internal Server Error', error });
+    }
+};
+
+
+
+export { addCategory, getCategory, deleteCategory, updateCategory };
