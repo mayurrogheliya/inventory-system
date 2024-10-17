@@ -6,15 +6,6 @@ const addCategory = async (req, res) => {
 
         console.log(req.body);
 
-        // Validate that name is present
-        if (!name) {
-            return res.status(400).json({ message: "Name is required" });
-        }
-
-        if (!req.file || !req.file.filename) {
-            return res.status(400).json({ message: "Image is required" });
-        }
-
         const imagePath = req.file ? `images/${req.file.filename}` : "";
 
         const newCategory = await CategoryDetail.create({
