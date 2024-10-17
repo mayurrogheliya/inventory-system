@@ -1,16 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { CategoryContext } from '../contexts/CategoryContext';
+import CategoryContext from '../contexts/CategoryContext.js';
 
-const Category = () => {
-  const { addCategories, updateCategory, currentCategory, setCurrentCategory } = useContext(CategoryContext);
+const Category = ({ currentCategory, setCurrentCategory }) => {
+  const { addCategories, updateCategory } = useContext(CategoryContext);
 
-  const [categoryItems, setCategoryItems] = useState({ name: '', image: '', status: true });
+  const [categoryItems, setCategoryItems] = useState({ name: '', image: '', status: 'Active' });
 
   useEffect(() => {
     if (currentCategory) {
       setCategoryItems(currentCategory);
     } else {
-      setCategoryItems({ name: '', image: '', status: true });
+      setCategoryItems({ name: '', image: '', status: 'Active' });
     }
   }, [currentCategory]);
 
@@ -20,7 +20,7 @@ const Category = () => {
     const formData = new FormData();
     formData.append("name", categoryItems.name);
     formData.append("image", categoryItems.image);
-    formData.append("status", categoryItems.status ? 'Active' : 'Inactive');
+    formData.append("status", categoryItems.status);
 
     if (categoryItems.id) {
       await updateCategory(currentCategory.id, formData);
@@ -28,7 +28,7 @@ const Category = () => {
       await addCategories(formData);
     }
 
-    setCategoryItems({ name: '', image: '', status: true });
+    setCategoryItems({ name: '', image: '', status: 'Active' });
     setCurrentCategory([]);
   }
 
@@ -36,7 +36,7 @@ const Category = () => {
     const { name, value } = e.target;
     setCategoryItems((prevCategoryItems) => ({
       ...prevCategoryItems,
-      [name]: name === 'status' ? value === 'Active' : value,
+      [name]: value,
     }));
   }
 
@@ -62,7 +62,7 @@ const Category = () => {
           </div>
           <div>
             <label htmlFor="status" className='block'>Status</label>
-            <select name="status" value={categoryItems.status ? "Active" : "Inactive"} id="status" onChange={handleOnChange} className='border border-gray-300 py-1 px-2 focus:outline-none focus:border-gray-400 w-full rounded-md focus:ring-1 focus:ring-gray-400'>
+            <select name="status" value={categoryItems.status} id="status" onChange={handleOnChange} className='border border-gray-300 py-1 px-2 focus:outline-none focus:border-gray-400 w-full rounded-md focus:ring-1 focus:ring-gray-400'>
               <option value="Active">Active</option>
               <option value="Inactive">Inactive</option>
             </select>

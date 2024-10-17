@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
-import { CategoryContext } from '../contexts/CategoryContext';
+import CategoryContext from '../contexts/CategoryContext.js';
 
-const CategoryItems = () => {
+const CategoryItems = ({ setCurrentCategory }) => {
 
-  const { categorys, deleteCategory, setCurrentCategory } = useContext(CategoryContext);
+  const { categorys, deleteCategory } = useContext(CategoryContext);
 
   return (
     <div>
