@@ -1,14 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import CategoryContext from '../contexts/CategoryContext.js';
 
 const Category = ({ currentCategory, setCurrentCategory }) => {
   const { addCategories, updateCategory } = useContext(CategoryContext);
 
   const [categoryItems, setCategoryItems] = useState({ name: '', image: '', status: 'Active' });
+  const imageRef = useRef(null);
 
   useEffect(() => {
     if (currentCategory) {
-      setCategoryItems(currentCategory);
+      setCategoryItems({
+        ...currentCategory,
+        name: currentCategory.name || "",
+        status: currentCategory.status || "Active"
+      });
     } else {
       setCategoryItems({ name: '', image: '', status: 'Active' });
     }
@@ -30,6 +35,11 @@ const Category = ({ currentCategory, setCurrentCategory }) => {
 
     setCategoryItems({ name: '', image: '', status: 'Active' });
     setCurrentCategory([]);
+
+    if (imageRef.current) {
+      imageRef.current.value = '';
+      console.log(imageRef.current);
+    }
   }
 
   const handleOnChange = (e) => {
@@ -47,6 +57,7 @@ const Category = ({ currentCategory, setCurrentCategory }) => {
     }));
   }
 
+
   return (
     <div>
       <div className='md:m-5 md:p-4 sm:m-4 sm:p-3 m-3 p-2'>
@@ -58,7 +69,7 @@ const Category = ({ currentCategory, setCurrentCategory }) => {
           </div>
           <div>
             <label htmlFor="cimg" className='block'>Upload Image</label>
-            <input type="file" name="image" id="image" onChange={handleImage} className='bg-gray-100 w-full rounded-md p-2 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 hover:cursor-pointer' accept='image/*' />
+            <input type="file" name="image" id="image" onChange={handleImage} ref={imageRef} className='bg-gray-100 w-full rounded-md p-2 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 hover:cursor-pointer' accept='image/*' />
           </div>
           <div>
             <label htmlFor="status" className='block'>Status</label>
