@@ -16,9 +16,19 @@ const Product = ({ currentProduct, setCurrentProduct }) => {
             setProductItems({
                 ...currentProduct,
                 status: currentProduct.status || "Active",
-            })
+            });
+            if (currentProduct.image) {
+                setImagePreview(`http://localhost:5000/${currentProduct.image}`);
+            } else {
+                setImagePreview(null);
+            }
         } else {
             setProductItems({ name: '', category: '', price: '', status: 'Active', weight: '', image: '' });
+            setImagePreview(null);
+        }
+        if (imageRef.current) {
+            imageRef.current.value = '';
+            console.log(imageRef.current);
         }
     }, [currentProduct])
 
@@ -42,10 +52,6 @@ const Product = ({ currentProduct, setCurrentProduct }) => {
         setProductItems({ name: '', category: '', price: '', status: 'Active', weight: '', image: '' });
         setCurrentProduct([]);
 
-        if (imageRef.current) {
-            imageRef.current.value = '';
-            console.log(imageRef.current);
-        }
     }
 
     const handleOnChange = (e) => {
@@ -65,7 +71,7 @@ const Product = ({ currentProduct, setCurrentProduct }) => {
         reader.readAsDataURL(file);
         setProductItems((prevProductItems) => ({
             ...prevProductItems,
-            image: e.target.files[0],
+            image: file,
         }))
     }
 
@@ -128,13 +134,9 @@ const Product = ({ currentProduct, setCurrentProduct }) => {
                             <div className='bg-gray-100 w-full rounded-md p-2 border border-gray-300'>
                                 <input type="file" name="image" id="image" ref={imageRef} onChange={handleImageChange} className='bg-gray-100 w-full rounded-md p-2 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 hover:cursor-pointer' accept='image/*' />
                                 <div className='mt-2'>
-                                    {
-                                        imagePreview ? (
-                                            <img className='w-12 h-12' src={imagePreview} alt="" />
-                                        ) : productItems.image ? (
-                                            <img className='w-12 h-12' src={`http://localhost:5000/${productItems.image}`} alt="" />
-                                        ) : null
-                                    }
+                                    {imagePreview && (
+                                        <img className='w-12 h-12' src={imagePreview} alt="Product Preview" />
+                                    )}
                                 </div>
                             </div>
                         </div>

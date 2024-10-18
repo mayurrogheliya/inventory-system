@@ -16,8 +16,18 @@ const Category = ({ currentCategory, setCurrentCategory }) => {
         name: currentCategory.name || "",
         status: currentCategory.status || "Active"
       });
+      if (currentCategory.image) {
+        setImagePreviews(`http://localhost:5000/${currentCategory.image}`);
+      } else {
+        setImagePreviews(null);
+      }
     } else {
       setCategoryItems({ name: '', image: '', status: 'Active' });
+      setImagePreviews(null);
+    }
+    if (imageRef.current) {
+      imageRef.current.value = '';
+      console.log(imageRef.current);
     }
   }, [currentCategory]);
 
@@ -35,13 +45,9 @@ const Category = ({ currentCategory, setCurrentCategory }) => {
       await addCategories(formData);
     }
 
+
     setCategoryItems({ name: '', image: '', status: 'Active' });
     setCurrentCategory([]);
-
-    if (imageRef.current) {
-      imageRef.current.value = '';
-      console.log(imageRef.current);
-    }
   }
 
   const handleOnChange = (e) => {
@@ -61,7 +67,7 @@ const Category = ({ currentCategory, setCurrentCategory }) => {
     reader.readAsDataURL(file);
     setCategoryItems((prevCategoryItems) => ({
       ...prevCategoryItems,
-      image: e.target.files[0],
+      image: file,
     }),
     );
   }
@@ -82,11 +88,9 @@ const Category = ({ currentCategory, setCurrentCategory }) => {
               <input type="file" name="image" id="image" onChange={handleImage} ref={imageRef} className='bg-gray-100 w-full rounded-md p-2 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 hover:cursor-pointer' accept='image/*' />
               <div className='mt-2'>
                 {
-                  imagePreviews ? (
-                    <img className='w-12 h-12' src={imagePreviews} alt="" />
-                  ) : categoryItems.image ? (
-                    <img className='w-12 h-12' src={`http://localhost:5000/${categoryItems.image}`} alt="" />
-                  ) : null
+                  imagePreviews && (
+                    <img className='w-12 h-12' src={imagePreviews} alt="Category Preview" />
+                  )
                 }
               </div>
             </div>
