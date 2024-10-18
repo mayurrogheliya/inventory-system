@@ -34,7 +34,7 @@ export const CategoryProvider = ({ children }) => {
     const deleteCategory = async (id) => {
         try {
             await axios.delete(`http://localhost:5000/api/categories/deleteCategory/${id}`);
-            setCategorys((prev) => prev.filter(item => item.id !== id));
+            getCategoryies();
             console.log("Category deleted successfully");
         } catch (error) {
             console.log("Error while deleting category: ", error);
