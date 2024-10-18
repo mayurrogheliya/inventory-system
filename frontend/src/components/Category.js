@@ -7,6 +7,8 @@ const Category = ({ currentCategory, setCurrentCategory }) => {
   const [categoryItems, setCategoryItems] = useState({ name: '', image: '', status: 'Active' });
   const imageRef = useRef(null);
 
+  const [imagePreviews, setImagePreviews] = useState(null);
+
   useEffect(() => {
     if (currentCategory) {
       setCategoryItems({
@@ -51,10 +53,17 @@ const Category = ({ currentCategory, setCurrentCategory }) => {
   }
 
   const handleImage = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setImagePreviews(e.target.result);
+    };
+    reader.readAsDataURL(file);
     setCategoryItems((prevCategoryItems) => ({
       ...prevCategoryItems,
       image: e.target.files[0],
-    }));
+    }),
+    );
   }
 
 
@@ -69,7 +78,18 @@ const Category = ({ currentCategory, setCurrentCategory }) => {
           </div>
           <div>
             <label htmlFor="cimg" className='block'>Upload Image</label>
-            <input type="file" name="image" id="image" onChange={handleImage} ref={imageRef} className='bg-gray-100 w-full rounded-md p-2 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 hover:cursor-pointer' accept='image/*' />
+            <div className='bg-gray-100 w-full rounded-md p-2 border border-gray-300'>
+              <input type="file" name="image" id="image" onChange={handleImage} ref={imageRef} className='bg-gray-100 w-full rounded-md p-2 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 hover:cursor-pointer' accept='image/*' />
+              <div className='mt-2'>
+                {
+                  imagePreviews ? (
+                    <img className='w-12 h-12' src={imagePreviews} alt="" />
+                  ) : categoryItems.image ? (
+                    <img className='w-12 h-12' src={`http://localhost:5000/${categoryItems.image}`} alt="" />
+                  ) : null
+                }
+              </div>
+            </div>
           </div>
           <div>
             <label htmlFor="status" className='block'>Status</label>
