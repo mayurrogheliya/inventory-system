@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import app from './app.js';
 import CategoryDetail from './models/category.model.js';
+import sequelize from './db/dbConfig.js';
 
 dotenv.config({
     path: "./.env"
@@ -8,11 +9,11 @@ dotenv.config({
 
 const port = process.env.PORT || 5000;
 
-CategoryDetail.sync()
+sequelize.sync()
     .then(() => {
-        console.log("CategoryDetail sync successful");
+        console.log("All model sync successful");
     }).catch((err) => {
-        console.log("CategoryDetail sync failed: ", err);
+        console.log("model sync failed: ", err);
 
     });
 
