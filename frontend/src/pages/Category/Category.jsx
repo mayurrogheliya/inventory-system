@@ -115,7 +115,7 @@ const Category = ({ currentCategory, setCurrentCategory }) => {
                     <div>
                         <label htmlFor="cimg" className='block'>Upload Image</label>
                         <div className='bg-gray-100 w-full rounded-md p-2 border border-gray-300'>
-                            <input type="file" name="image" id="image" onChange={handleImage} ref={imageRef} className='bg-gray-100 w-full rounded-md p-2 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 hover:cursor-pointer' accept='image/*' />
+                            <input type="file" name="image" id="image" onChange={handleImage} ref={imageRef} className='bg-gray-100 w-full rounded-md p-2 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 hover:cursor-pointer' />
                             <div className='mt-2'>
                                 {
                                     imagePreviews && (
