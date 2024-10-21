@@ -6,7 +6,7 @@ import { addProduct, deleteProduct, getProducts, updateProduct } from "../contro
 const router = Router();
 
 // create a new category
-router.route('/addCategory').post(upoload.single('image'), addCategory);
+router.route('/addCategory').post(upoload, addCategory);
 
 // get category
 router.route('/getCategory').get(getCategory);
@@ -15,10 +15,10 @@ router.route('/getCategory').get(getCategory);
 router.route('/deleteCategory/:id').delete(deleteCategory);
 
 // edit category
-router.route('/updateCategory/:id').put(upoload.single('image'), updateCategory);
+router.route('/updateCategory/:id').put(upoload, updateCategory);
 
 // add product
-router.route("/addProduct").post(upoload.single('image'), addProduct);
+router.route("/addProduct").post(upoload, addProduct);
 
 // get products
 router.route("/getProducts").get(getProducts);
@@ -27,6 +27,6 @@ router.route("/getProducts").get(getProducts);
 router.route("/deleteProduct/:id").delete(deleteProduct);
 
 // update product
-router.route("/updateProduct/:id").put(upoload.single('image'), updateProduct);
+router.route("/updateProduct/:id").put(upoload, updateProduct);
 
 export default router;

@@ -1,7 +1,6 @@
 import CategoryDetail from "../models/category.model.js";
 import path from 'path';
 import fs from 'fs';
-import { log } from "console";
 
 const addCategory = async (req, res) => {
     try {
@@ -17,11 +16,9 @@ const addCategory = async (req, res) => {
             status: status,
         });
         res.json(newCategory);
-        console.log(newCategory);
-
     } catch (error) {
         console.log("Error creating category: ", error);
-        res.status(500).json(error);
+        res.status(500).json({message: "Error creating category"});
     }
 }
 
@@ -29,9 +26,9 @@ const getCategory = async (req, res) => {
     try {
         const categorys = await CategoryDetail.findAll();
         res.json(categorys);
-        console.log(categorys);
     } catch (error) {
         console.log("Error while fetching category: ", error);
+        res.status(500).json({message:"Error while fetching category"});
     }
 }
 
@@ -41,7 +38,7 @@ const deleteCategory = async (req, res) => {
         const category = await CategoryDetail.findByPk(req.params.id);
 
         if (!category) {
-            return res.status(404).json({ message: 'Category not found' });
+            res.status(404).json({ message: 'Category not found' });
         }
 
         // delete the image file if exists
@@ -79,7 +76,7 @@ const updateCategory = async (req, res) => {
         const category = await CategoryDetail.findByPk(req.params.id);
 
         if (!category) {
-            return res.status(404).json({ message: 'Category not found' });
+            res.status(404).json({ message: 'Category not found' });
         }
 
         let newImagePath = category.image;
