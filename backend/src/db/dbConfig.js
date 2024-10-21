@@ -1,9 +1,14 @@
 import { Sequelize } from 'sequelize';
 
-const sequelize = new Sequelize('ass', "root", "", {
-    host: 'localhost',
-    dialect: 'mysql'
-})
+const sequelize = new Sequelize(
+    process.env.DATABASE,
+    'root',
+    '',
+    {
+        host: process.env.HOST,
+        dialect: process.env.DIALECT
+    }
+);
 
 sequelize.authenticate()
     .then(() => {

@@ -1,7 +1,8 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
-const CategoryContext = createContext();
+export const CategoryContext = createContext();
 
 export const CategoryProvider = ({ children }) => {
 
@@ -26,8 +27,10 @@ export const CategoryProvider = ({ children }) => {
             });
             getCategoryies();
             console.log("Category created successfully: ", response.data);
+            toast.success("Category added successfully");
         } catch (error) {
             console.log("Error creating category: ", error);
+            toast.error("Error while creating category");
         }
     }
 
@@ -36,8 +39,10 @@ export const CategoryProvider = ({ children }) => {
             await axios.delete(`http://localhost:5000/api/categories/deleteCategory/${id}`);
             getCategoryies();
             console.log("Category deleted successfully");
+            toast.success("Category deleted successfully");
         } catch (error) {
             console.log("Error while deleting category: ", error);
+            toast.error("Error while deleting category");
         }
     };
 
@@ -46,8 +51,10 @@ export const CategoryProvider = ({ children }) => {
             await axios.put(`http://localhost:5000/api/categories/updateCategory/${id}`, categorysItem);
             getCategoryies();
             console.log("Category updated successfully");
+            toast.success("Category updated successfully");
         } catch (error) {
             console.log("Error while updating category: ", error);
+            toast.error("Error while updating category");
         }
     }
 
@@ -62,5 +69,3 @@ export const CategoryProvider = ({ children }) => {
     );
 
 }
-
-export default CategoryContext;

@@ -1,14 +1,14 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-const Header = () => {
+export const Header = () => {
     return (
         <>
             <header className="shadow-sm  top-0">
                 <nav className="bg-white border-gray-200 px-2 lg:px-6">
                     <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
                         <div
-                            className=" justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
+                            className="my-4 justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
                         >
                             <ul className="flex flex-col mt-4 gap-2 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
                                 <li>
@@ -40,4 +40,3 @@ const Header = () => {
     )
 }
 
-export default Header

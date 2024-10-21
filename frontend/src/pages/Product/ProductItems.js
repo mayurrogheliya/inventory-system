@@ -1,5 +1,8 @@
 import React, { useContext } from 'react'
-import ProductContext from '../contexts/ProductContext.js'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPenToSquare, faSortDown, faSortUp, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { ProductContext } from '../../contexts';
+
 
 const ProductItems = ({ setCurrentProduct }) => {
 
@@ -10,7 +13,15 @@ const ProductItems = ({ setCurrentProduct }) => {
             <div className='md:mx-5 md:px-4 sm:mx-4 sm:px-3 mx-3 px-2'>
                 <h1 className='font-bold sm:text-3xl text-2xl'>Available Product</h1>
                 <div className='overflow-x-scroll'>
-                    <table className='table table-auto border-collapse border border-slate-500 w-full my-5'>
+                    <div className='my-2 flex flex-row-reverse gap-1'>
+                        <button className='bg-gray-200 px-2 pt-1 rounded'>
+                            <FontAwesomeIcon icon={faSortUp} />
+                        </button>
+                        <button className='bg-gray-200 px-2 pb-1 rounded'>
+                            <FontAwesomeIcon icon={faSortDown} />
+                        </button>
+                    </div>
+                    <table className='table table-auto border-collapse border border-slate-500 w-full'>
                         <thead>
                             <tr>
                                 <th className='border border-slate-600'>Name</th>
@@ -25,7 +36,7 @@ const ProductItems = ({ setCurrentProduct }) => {
 
                         {products.length > 0 ?
                             <tbody>
-                                {products.map((item) =>
+                                {products.slice(0).reverse().map((item) =>
                                     <tr key={item.id}>
                                         <td className='border border-slate-700 px-2'>{item.name}</td>
                                         <td className='border border-slate-700 px-2'>{item.category}</td>
@@ -36,8 +47,9 @@ const ProductItems = ({ setCurrentProduct }) => {
                                             <img className='w-14 h-14 rounded-sm' src={`http://localhost:5000/${item.image}`} alt="images" />
                                         </td>
                                         <td className='border border-slate-700 px-2'>
-                                            <button className='m-1 bg-green-500 hover:bg-green-600 text-white rounded-md sm:px-4 px-3 py-1' onClick={() => setCurrentProduct(item)}>Edit</button>
-                                            <button className='m-1 bg-red-500 hover:bg-red-600 text-white rounded-md sm:px-4 px-2 py-1' onClick={() => deleteProduct(item.id)}>Delete</button>
+                                            <button className='m-1 bg-green-500 hover:bg-green-600 text-white rounded-md sm:px-4 px-2 py-1' onClick={() => setCurrentProduct(item)}><FontAwesomeIcon icon={faPenToSquare} />
+                                            </button>
+                                            <button className='m-1 bg-red-500 hover:bg-red-600 text-white rounded-md sm:px-4 px-2 py-1' onClick={() => deleteProduct(item.id)}><FontAwesomeIcon icon={faTrash} /></button>
                                         </td>
                                     </tr>
                                 )}

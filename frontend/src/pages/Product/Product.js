@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import ProductContext from '../contexts/ProductContext';
+import { ProductContext } from '../../contexts';
 
 const Product = ({ currentProduct, setCurrentProduct }) => {
 

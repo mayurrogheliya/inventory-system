@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Product from './Product'
-import { ProductProvider } from '../contexts/ProductContext'
 import ProductItems from './ProductItems';
+import { ProductProvider } from '../../contexts';
 
 const ProductMain = () => {
 

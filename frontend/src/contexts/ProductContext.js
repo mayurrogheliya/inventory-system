@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 
-const ProductContext = createContext();
+export const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
     const [products, setProducts] = useState([]);
@@ -60,5 +60,3 @@ export const ProductProvider = ({ children }) => {
         </ProductContext.Provider>
     )
 }
-
-export default ProductContext;

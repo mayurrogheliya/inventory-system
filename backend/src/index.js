@@ -1,6 +1,5 @@
 import dotenv from 'dotenv';
 import app from './app.js';
-import CategoryDetail from './models/category.model.js';
 import sequelize from './db/dbConfig.js';
 
 dotenv.config({

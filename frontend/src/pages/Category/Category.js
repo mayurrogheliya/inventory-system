@@ -1,13 +1,15 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import CategoryContext from '../contexts/CategoryContext.js';
+import { CategoryContext } from '../../contexts';
 
 const Category = ({ currentCategory, setCurrentCategory }) => {
-  const { addCategories, updateCategory } = useContext(CategoryContext);
+  const { addCategories, updateCategory, categorys } = useContext(CategoryContext);
 
   const [categoryItems, setCategoryItems] = useState({ name: '', image: '', status: 'Active' });
   const imageRef = useRef(null);
 
   const [imagePreviews, setImagePreviews] = useState(null);
+
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (currentCategory) {
@@ -31,8 +33,33 @@ const Category = ({ currentCategory, setCurrentCategory }) => {
     }
   }, [currentCategory]);
 
+  const validateName = (name) => {
+    const regex = /^[A-Za-z]/; // Checks if first character is an alphabet
+    return regex.test(name);
+  };
+
+  // Function to check if the category name already exists
+  const doesNameExist = (name) => {
+    return categorys.some((category) => category.name.toLowerCase() === name.toLowerCase() && category.id !== currentCategory?.id);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate name field
+    if (!validateName(categoryItems.name)) {
+      setError('Name must start with an alphabet.');
+      return; // Stop form submission
+    }
+
+    // Check if name already exists
+    if (doesNameExist(categoryItems.name)) {
+      setError('Name already exists.');
+      return; // Stop form submission
+    }
+
+    // Clear error if validation passes
+    setError('');
 
     const formData = new FormData();
     formData.append("name", categoryItems.name);
@@ -80,7 +107,8 @@ const Category = ({ currentCategory, setCurrentCategory }) => {
         <form className='flex flex-col w-full my-3 gap-2' onSubmit={handleSubmit}>
           <div>
             <label htmlFor="cname" className='block'>Name</label>
-            <input type="text" name="name" id="name" value={categoryItems.name} onChange={handleOnChange} className='border border-gray-300 py-1 px-2 focus:outline-none focus:border-gray-400 w-full rounded-md focus:ring-1 focus:ring-gray-400' autoFocus />
+            <input type="text" name="name" id="name" value={categoryItems.name} onChange={handleOnChange} className='border border-gray-300 py-1 px-2 focus:outline-none focus:border-gray-400 w-full rounded-md focus:ring-1 focus:ring-gray-400' />
+            {error && <p className='text-red-500 text-sm'>{error}</p>}
           </div>
           <div>
             <label htmlFor="cimg" className='block'>Upload Image</label>
