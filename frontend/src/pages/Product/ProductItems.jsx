@@ -43,10 +43,14 @@ const ProductItems = ({ setCurrentProduct }) => {
                                         <td className='border border-slate-700 px-2'>{item.name}</td>
                                         <td className='border border-slate-700 px-2'>{item.category}</td>
                                         <td className='border border-slate-700 px-2'>{item.price}</td>
-                                        <td className='border border-slate-700 px-2'>{item.status}</td>
+                                        <td className={`border border-slate-700 px-2 ${item.status === "Active" ? "text-green-500 font-medium" : "text-red-500 font-medium"}`}>{item.status}</td>
                                         <td className='border border-slate-700 px-2'>{item.weight}</td>
                                         <td className='border border-slate-700 px-2'>
-                                            <img className='w-14 h-14 rounded-sm' src={`http://localhost:5000/${item.image}`} alt="images" />
+                                            {item.image ? (
+                                                <img className='w-14 h-14 rounded-sm' src={`http://localhost:5000/${item.image}`} alt="product" />
+                                            ) : (
+                                                <span>No Image</span>
+                                            )}
                                         </td>
                                         <td className='border border-slate-700 px-2'>
                                             <button className='m-1 bg-green-500 hover:bg-green-600 text-white rounded-md sm:px-4 px-2 py-1' onClick={() => setCurrentProduct(item)}><FontAwesomeIcon icon={faPenToSquare} />

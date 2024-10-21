@@ -39,9 +39,16 @@ const CategoryItems = ({ setCurrentCategory }) => {
                                     <tr key={item.id}>
                                         <td className='border border-slate-700 sm:px-2 px-1'>{item.name}</td>
                                         <td className='border border-slate-700 py-1 sm:px-2 px-1'>
-                                            <img className='w-14 h-14 rounded-sm' src={`http://localhost:5000/${item.image}`} alt="images" />
+                                            {item.image ? (
+                                                <img className='w-14 h-14 rounded-sm' src={`http://localhost:5000/${item.image}`} alt="Category" />
+                                            )
+                                                :
+                                                (
+                                                    <span>No Image</span>
+                                                )
+                                            }
                                         </td>
-                                        <td className='border border-slate-700 px-2'>{item.status}</td>
+                                        <td className={`border border-slate-700 px-2 ${item.status === "Active" ? "text-green-500 font-medium" : "text-red-500 font-medium"}`}>{item.status}</td>
                                         <td className='border border-slate-700 px-2'>
                                             <button className='m-1 bg-green-500 hover:bg-green-600 text-white rounded-md sm:px-4 px-2 py-1' onClick={() => setCurrentCategory(item)}><FontAwesomeIcon icon={faPenToSquare} /></button>
                                             <button className='m-1 bg-red-500 hover:bg-red-600 text-white rounded-md sm:px-4 px-2 py-1' onClick={() => deleteCategory(item.id)}><FontAwesomeIcon icon={faTrash} /></button>
