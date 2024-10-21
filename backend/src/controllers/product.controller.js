@@ -11,7 +11,7 @@ const addProduct = async (req, res) => {
         const imagePath = req.file ? `images/${req.file.filename}` : "";
 
         if ([name, category, price].some((field) => field?.trim() === "")) {
-            return res.status(400).json({ message: "name,category,price is required field" });
+            res.status(400).json({ message: "name,category,price is required field" });
         }
 
         const newProduct = await ProductDetail.create({
@@ -23,11 +23,10 @@ const addProduct = async (req, res) => {
             image: imagePath,
         });
         res.json(newProduct);
-        console.log(newProduct);
 
     } catch (error) {
         console.log("Error creating product: ", error);
-        res.status(500).json(error);
+        res.status(500).json({ message: "Error while creating product" });
     }
 }
 
@@ -37,8 +36,8 @@ const getProducts = async (req, res) => {
         res.status(200).json(products);
         console.log(products);
     } catch (error) {
-        res.status(500).json("Internal server error to get the products: ", error);
-        console.log("Error while getting the products: ", error);
+        console.log("Error while getting the products", error);
+        res.status(500).json({ message: "Error while fetching product" });
     }
 }
 
@@ -47,7 +46,7 @@ const deleteProduct = async (req, res) => {
         const product = await ProductDetail.findByPk(req.params.id);
 
         if (!product) {
-            return res.status(404).json({ message: "Product not found" });
+            res.status(404).json({ message: "Product not found" });
         }
 
         // Delete the product image
