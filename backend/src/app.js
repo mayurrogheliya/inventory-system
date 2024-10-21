@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import { categoryRouter, productRouter } from './routes/index.js';
 
 const app = express();
 
@@ -18,9 +19,9 @@ app.use(express.urlencoded({ extended: true }));
 // middleware for handling images
 app.use(express.static('public'));
 
-import categoryRouter from './routes/category.routes.js';
 
 app.use("/api/categories", categoryRouter);
+app.use("/api/product", productRouter);
 
 app.get("/", (req, res) => {
     res.send("Hello from the server side!");
