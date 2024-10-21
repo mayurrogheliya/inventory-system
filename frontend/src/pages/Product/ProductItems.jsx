@@ -1,4 +1,6 @@
-import React, { useContext } from 'react'
+/* eslint-disable react/prop-types */
+
+import { useContext } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faSortDown, faSortUp, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { ProductContext } from '../../contexts';

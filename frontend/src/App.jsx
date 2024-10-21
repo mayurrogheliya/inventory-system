@@ -1,4 +1,3 @@
-import React from 'react'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
 import ProductMain from './pages/Product/ProductMain'
 import CategoryMain from './pages/Category/CategoryMain'

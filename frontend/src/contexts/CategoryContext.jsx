@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -10,7 +12,7 @@ export const CategoryProvider = ({ children }) => {
 
     const getCategoryies = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/api/categories/getCategory");
+            const response = await axios.get("/api/categories/getCategory");
             console.log("Categories fetched successfully: ", response.data);
             setCategorys(response.data);
         } catch (error) {
@@ -20,7 +22,7 @@ export const CategoryProvider = ({ children }) => {
 
     const addCategories = async (CategoryItems) => {
         try {
-            const response = await axios.post("http://localhost:5000/api/categories/addCategory", CategoryItems, {
+            const response = await axios.post("/api/categories/addCategory", CategoryItems, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }
@@ -36,7 +38,7 @@ export const CategoryProvider = ({ children }) => {
 
     const deleteCategory = async (id) => {
         try {
-            await axios.delete(`http://localhost:5000/api/categories/deleteCategory/${id}`);
+            await axios.delete(`/api/categories/deleteCategory/${id}`);
             getCategoryies();
             console.log("Category deleted successfully");
             toast.success("Category deleted successfully");
@@ -48,7 +50,7 @@ export const CategoryProvider = ({ children }) => {
 
     const updateCategory = async (id, categorysItem) => {
         try {
-            await axios.put(`http://localhost:5000/api/categories/updateCategory/${id}`, categorysItem);
+            await axios.put(`/api/categories/updateCategory/${id}`, categorysItem);
             getCategoryies();
             console.log("Category updated successfully");
             toast.success("Category updated successfully");
@@ -67,5 +69,4 @@ export const CategoryProvider = ({ children }) => {
             {children}
         </CategoryContext.Provider>
     );
-
 }

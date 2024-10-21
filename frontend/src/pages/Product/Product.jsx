@@ -1,5 +1,7 @@
+/* eslint-disable react/prop-types */
+
 import axios from 'axios';
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { ProductContext } from '../../contexts';
 
 const Product = ({ currentProduct, setCurrentProduct }) => {
@@ -79,7 +81,7 @@ const Product = ({ currentProduct, setCurrentProduct }) => {
     const [categorys, setCategorys] = useState([]);
     const getCategoryies = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/api/categories/getCategory");
+            const response = await axios.get("/api/categories/getCategory");
             const categoryName = response.data
                 .filter(category => category.status === "Active" && category.name !== "")
             console.log(categoryName);
