@@ -6,7 +6,9 @@ import { ProductContext } from '../../contexts';
 
 const Product = ({ currentProduct, setCurrentProduct }) => {
 
-    const { addProduct, updateProduct } = useContext(ProductContext);
+    const { addProduct, updateProduct, products } = useContext(ProductContext);
+
+    const [error, setError] = useState(null);
 
     const [productItems, setProductItems] = useState({ name: '', category: '', price: '', status: 'Active', weight: '', image: '' })
 
@@ -34,8 +36,29 @@ const Product = ({ currentProduct, setCurrentProduct }) => {
         }
     }, [currentProduct])
 
+    const validateName = (name) => {
+        const regex = /^[A-Za-z]/; // Checks if first character is an alphabet
+        return regex.test(name);
+    };
+
+    const doesNameExist = (name) => {
+        return products.some((product) => product.name.toLowerCase() === name.toLowerCase() && product.id !== currentProduct?.id);
+    }
+
     const handleOnSubmit = async (e) => {
         e.preventDefault();
+
+        if (!validateName(productItems.name)) {
+            setError("Name must start with an alphabetic letter")
+            return;
+        }
+
+        if (doesNameExist(productItems.name)) {
+            setError("Product name already exists")
+            return;
+        }
+
+        setError(null);
 
         const formData = new FormData();
         formData.append("name", productItems.name);
@@ -103,7 +126,8 @@ const Product = ({ currentProduct, setCurrentProduct }) => {
                     <form className='flex flex-col w-full my-3 gap-2' onSubmit={handleOnSubmit}>
                         <div>
                             <label htmlFor="name" className='block'>Name</label>
-                            <input type="text" name="name" id="name" value={productItems.name} onChange={handleOnChange} className='border border-gray-300 py-1 px-2 focus:outline-none focus:border-gray-400 w-full rounded-md focus:ring-1 focus:ring-gray-400' required />
+                            <input type="text" name="name" id="name" value={productItems.name} onChange={handleOnChange} className={`border py-1 px-2 focus:outline-none w-full rounded-md focus:ring-1  ${error ? 'border-red-400 focus:border-red-400 focus:ring-red-400' : 'border-gray-300 focus:border-gray-400 focus:ring-gray-400'}`} required />
+                            {error && <p className='text-red-500 text-sm'>{error}</p>}
                         </div>
                         <div>
                             <label htmlFor="category" className='block'>Category</label>
