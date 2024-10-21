@@ -50,13 +50,13 @@ const Category = ({ currentCategory, setCurrentCategory }) => {
 
         // Validate name field
         if (!validateName(categoryItems.name)) {
-            setError('Name must start with an alphabet.');
+            setError('Name must start with an alphabetic latter');
             return; // Stop form submission
         }
 
         // Check if name already exists
         if (doesNameExist(categoryItems.name)) {
-            setError('Name already exists.');
+            setError('Category Name already exists.');
             return; // Stop form submission
         }
 
@@ -109,7 +109,7 @@ const Category = ({ currentCategory, setCurrentCategory }) => {
                 <form className='flex flex-col w-full my-3 gap-2' onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor="cname" className='block'>Name</label>
-                        <input type="text" name="name" id="name" value={categoryItems.name} onChange={handleOnChange} className='border border-gray-300 py-1 px-2 focus:outline-none focus:border-gray-400 w-full rounded-md focus:ring-1 focus:ring-gray-400' />
+                        <input type="text" name="name" id="name" value={categoryItems.name} onChange={handleOnChange} className={`border py-1 px-2 focus:outline-none w-full rounded-md focus:ring-1  ${error ? 'border-red-400 focus:border-red-400 focus:ring-red-400' : 'border-gray-300 focus:border-gray-400 focus:ring-gray-400'}`} />
                         {error && <p className='text-red-500 text-sm'>{error}</p>}
                     </div>
                     <div>
