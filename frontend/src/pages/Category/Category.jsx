@@ -106,14 +106,14 @@ const Category = ({ currentCategory, setCurrentCategory }) => {
         <div>
             <div className='md:m-5 md:p-4 sm:m-4 sm:p-3 m-3 p-2'>
                 <h1 className='font-bold sm:text-3xl text-2xl'>Add Category</h1>
-                <form className='flex flex-col w-full my-3 gap-2' onSubmit={handleSubmit}>
+                <form className='grid grid-cols-1 md:grid-cols-3 w-full my-3 gap-y-4 gap-x-3' onSubmit={handleSubmit}>
                     <div>
-                        <label htmlFor="cname" className='block'>Name</label>
+                        <label htmlFor="cname">Name</label>
                         <input type="text" name="name" id="name" value={categoryItems.name} onChange={handleOnChange} className={`border py-1 px-2 focus:outline-none w-full rounded-md focus:ring-1  ${error ? 'border-red-400 focus:border-red-400 focus:ring-red-400' : 'border-gray-300 focus:border-gray-400 focus:ring-gray-400'}`} />
                         {error && <p className='text-red-500 text-sm'>{error}</p>}
                     </div>
                     <div>
-                        <label htmlFor="cimg" className='block'>Upload Image</label>
+                        <label htmlFor="cimg">Upload Image</label>
                         <div className='bg-gray-100 w-full rounded-md p-2 border border-gray-300'>
                             <input type="file" name="image" id="image" onChange={handleImage} ref={imageRef} className='bg-gray-100 w-full rounded-md p-2 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 hover:cursor-pointer' />
                             <div className='mt-2'>
@@ -126,13 +126,18 @@ const Category = ({ currentCategory, setCurrentCategory }) => {
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="status" className='block'>Status</label>
+                        <label htmlFor="status">Status</label>
                         <select name="status" value={categoryItems.status} id="status" onChange={handleOnChange} className='border border-gray-300 py-1 px-2 focus:outline-none focus:border-gray-400 w-full rounded-md focus:ring-1 focus:ring-gray-400'>
                             <option value="Active">Active</option>
                             <option value="Inactive">Inactive</option>
                         </select>
                     </div>
-                    <button type="submit" className='bg-blue-600 text-white self-start py-1 px-4 mt-3 text-lg rounded-lg hover:bg-blue-700'>{categoryItems.id ? 'Update' : 'Add'}</button>
+                    <div>
+                        <button type="submit" className='bg-blue-600 w-full sm:w-auto text-white self-start py-1 px-4 mt-3 text-lg rounded-lg hover:bg-blue-700'>
+                            {categoryItems.id ? 'Update' : 'Add'}
+                        </button>
+
+                    </div>
                 </form>
             </div>
         </div>

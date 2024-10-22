@@ -123,7 +123,7 @@ const Product = ({ currentProduct, setCurrentProduct }) => {
             <div>
                 <div className='md:m-5 md:p-4 sm:m-4 sm:p-3 m-3 p-2'>
                     <h1 className='font-bold sm:text-3xl text-2xl'>Add Product</h1>
-                    <form className='flex flex-col w-full my-3 gap-2' onSubmit={handleOnSubmit}>
+                    <form className='grid grid-cols-1 md:grid-cols-3 w-full my-3 gap-y-4 gap-x-3' onSubmit={handleOnSubmit}>
                         <div>
                             <label htmlFor="name" className='block'>Name</label>
                             <input type="text" name="name" id="name" value={productItems.name} onChange={handleOnChange} className={`border py-1 px-2 focus:outline-none w-full rounded-md focus:ring-1  ${error ? 'border-red-400 focus:border-red-400 focus:ring-red-400' : 'border-gray-300 focus:border-gray-400 focus:ring-gray-400'}`} required />
@@ -166,7 +166,9 @@ const Product = ({ currentProduct, setCurrentProduct }) => {
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" className='bg-blue-600 text-white self-start py-1 px-4 mt-3 text-lg rounded-lg hover:bg-blue-700'>{productItems.id ? 'Update' : 'Add'}</button>
+                        <div>
+                            <button type="submit" className='bg-blue-600 text-white w-full sm:w-auto self-start py-1 px-4 mt-3 text-lg rounded-lg hover:bg-blue-700'>{productItems.id ? 'Update' : 'Add'}</button>
+                        </div>
                     </form>
                 </div>
             </div>
