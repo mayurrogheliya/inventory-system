@@ -128,8 +128,8 @@ const ProductItems = ({ setCurrentProduct }) => {
 
                         {products.length > 0 ?
                             <tbody>
-                                {products.slice(0).reverse().map((item) =>
-                                    <tr key={item.id}>
+                                {products.slice(0).reverse().map((item, index) =>
+                                    <tr key={item.id} className={`hover:bg-gray-100 ${index % 2 === 0 ? "bg-gray-50" : "bg-white"}`}>
                                         <td className='border border-slate-700 px-2'>
                                             {highlightText(item.name, searchTerm)}
                                         </td>
