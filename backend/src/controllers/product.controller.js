@@ -1,6 +1,7 @@
 import ProductDetail from "../models/product.model.js";
 import path from 'path';
 import fs from 'fs';
+import { Op } from "sequelize";
 
 const addProduct = async (req, res) => {
     try {
@@ -31,9 +32,26 @@ const addProduct = async (req, res) => {
 }
 
 const getProducts = async (req, res) => {
+
+    const { page = 1, limit = 5 } = req.query;
+
     try {
-        const products = await ProductDetail.findAll();
-        res.status(200).json(products);
+
+        const offset = (page - 1) * limit;
+
+        const products = await ProductDetail.findAndCountAll({
+            limit: parseInt(limit),
+            offset: parseInt(offset),
+        })
+
+        const totalPages = Math.ceil(products.count / limit)
+
+        res.status(200).json({
+            data: products.rows,
+            currentPage: parseInt(page),
+            totalPages,
+            totalItems: products.count,
+        });
         console.log(products);
     } catch (error) {
         console.log("Error while getting the products", error);
@@ -122,4 +140,30 @@ const updateProduct = async (req, res) => {
     }
 }
 
-export { addProduct, getProducts, deleteProduct, updateProduct };
+const searchProduct = async (req, res) => {
+    const searchTerm = req.query.q;
+
+    try {
+        const results = await ProductDetail.findAll({
+            where: {
+                [Op.or]: [
+                    {
+                        name: { [Op.like]: `%${searchTerm}%` },
+                    },
+                    {
+                        category: { [Op.like]: `%${searchTerm}%` },
+                    },
+                    {
+                        status: { [Op.like]: `%${searchTerm}%` },
+                    },
+                ],
+            },
+        });
+        res.json(results);
+    } catch (err) {
+        console.error("Error searching for product: ", err);
+        res.status(500).json({ message: "Error while searching for product" });
+    }
+}
+
+export { addProduct, getProducts, deleteProduct, updateProduct, searchProduct };

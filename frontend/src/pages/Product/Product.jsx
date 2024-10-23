@@ -102,16 +102,32 @@ const Product = ({ currentProduct, setCurrentProduct }) => {
 
     // get category
     const [categorys, setCategorys] = useState([]);
-    const getCategoryies = async () => {
+
+    const getCategoryies = async (page = 1, limit = 5) => {
+        let allActiveCategories = [];
+        let totalPages = 1;
+
         try {
-            const response = await axios.get("/api/categories/getCategory");
-            const categoryName = response.data
-                .filter(category => category.status === "Active" && category.name !== "")
-            console.log(categoryName);
-            setCategorys(categoryName);
+            while (page <= totalPages) {
+                const response = await axios.get(`/api/categories/getCategory?page=${page}&limit=${limit}`);
+
+                const { data: categories, totalPages: apiTotalPages } = response.data;
+
+                const activeCategories = categories.filter(category => category.status === "Active" && category.name !== "");
+
+                allActiveCategories = [...allActiveCategories, ...activeCategories];
+
+                totalPages = apiTotalPages;
+
+                page++;
+            }
+
+            setCategorys(allActiveCategories);
+            console.log("All active categories:", allActiveCategories);
         } catch (error) {
             console.log("Error while fetching categories: ", error);
         }
+
     }
 
     useEffect(() => {

@@ -1,6 +1,7 @@
 import CategoryDetail from "../models/category.model.js";
 import path from 'path';
 import fs from 'fs';
+import { Op } from "sequelize";
 
 const addCategory = async (req, res) => {
     try {
@@ -23,9 +24,25 @@ const addCategory = async (req, res) => {
 }
 
 const getCategory = async (req, res) => {
+
+    const { page = 1, limit = 5 } = req.query;
+
     try {
-        const categorys = await CategoryDetail.findAll();
-        res.json(categorys);
+        const offset = (page - 1) * limit;
+
+        const categorys = await CategoryDetail.findAndCountAll({
+            limit: parseInt(limit),
+            offset: parseInt(offset),
+        });
+
+        const totalPages = Math.ceil(categorys.count / limit)
+
+        res.json({
+            data: categorys.rows,
+            currentPage: parseInt(page),
+            totalPages,
+            totalItems:categorys.count,
+        });
     } catch (error) {
         console.log("Error while fetching category: ", error);
         res.status(500).json({message:"Error while fetching category"});
@@ -114,6 +131,33 @@ const updateCategory = async (req, res) => {
     }
 };
 
+const searchCategory = async (req, res) => {
+    const searchTerm = req.query.q;
+    try {
+        const results = await CategoryDetail.findAll({
+            where: {
+                [Op.or]: [
+                    {
+                        name: {
+                            [Op.like]: `%${searchTerm}%`,
+                        },
+                    },
+                    {
+                        status: {
+                            [Op.like]: `%${searchTerm}%`,
+                        },
+                    }
+                ]
+            },
+        });
+
+        res.json(results);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+}
 
 
-export { addCategory, getCategory, deleteCategory, updateCategory };
+
+export { addCategory, getCategory, deleteCategory, updateCategory, searchCategory };

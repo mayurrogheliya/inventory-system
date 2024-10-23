@@ -9,12 +9,22 @@ export const CategoryContext = createContext();
 export const CategoryProvider = ({ children }) => {
 
     const [categorys, setCategorys] = useState([]);
+    const [pagination, setPagination] = useState({
+        currentPage: 1,
+        totalPages: 1,
+        totalItems: 0
+    });
 
-    const getCategoryies = async () => {
+    const getCategoryies = async (page = 1, limit = 5) => {
         try {
-            const response = await axios.get("/api/categories/getCategory");
+            const response = await axios.get(`/api/categories/getCategory?page=${page}&limit=${limit}`);
             console.log("Categories fetched successfully: ", response.data);
-            setCategorys(response.data);
+            setCategorys(response.data.data);
+            setPagination({
+                currentPage: response.data.currentPage,
+                totalPages: response.data.totalPages,
+                totalItems: response.data.totalItems
+            });
         } catch (error) {
             console.log("Error while fetching categories: ", error);
         }
@@ -60,12 +70,23 @@ export const CategoryProvider = ({ children }) => {
         }
     }
 
+    const searchCategory = async (item) => {
+        try {
+            if (!(item.trim() === "")) {
+                const response = await axios.get(`/api/categories/searchCategory/?q=${item}`);
+                setCategorys(response.data);
+            }
+        } catch (error) {
+            console.log("Error while searching category: ", error);
+        }
+    }
+
     useEffect(() => {
         getCategoryies();
     }, []);
 
     return (
-        <CategoryContext.Provider value={{ categorys, getCategoryies, addCategories, deleteCategory, updateCategory }}>
+        <CategoryContext.Provider value={{ categorys, setCategorys, getCategoryies, addCategories, deleteCategory, updateCategory, searchCategory, pagination }}>
             {children}
         </CategoryContext.Provider>
     );

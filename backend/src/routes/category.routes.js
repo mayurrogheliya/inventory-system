@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addCategory, deleteCategory, getCategory, updateCategory } from "../controllers/category.controller.js";
+import { addCategory, deleteCategory, getCategory, searchCategory, updateCategory } from "../controllers/category.controller.js";
 import { upoload } from "../middlewares/multer.middleware.js";
 
 const router = Router();
@@ -15,5 +15,8 @@ router.route('/deleteCategory/:id').delete(deleteCategory);
 
 // edit category
 router.route('/updateCategory/:id').put(upoload, updateCategory);
+
+// search category
+router.route('/searchCategory').get(searchCategory)
 
 export default router;
