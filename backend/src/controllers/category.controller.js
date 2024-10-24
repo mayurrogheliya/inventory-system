@@ -5,11 +5,20 @@ import { Op } from "sequelize";
 
 const addCategory = async (req, res) => {
     try {
+        if (req.fileValidationError) {
+            console.error(req.fileValidationError);
+            return res.status(400).json({ message: req.fileValidationError });
+        }
+        
         const { name, status } = req.body;
 
         console.log(req.body);
 
         const imagePath = req.file ? `images/${req.file.filename}` : "";
+
+        if (req.fileValidationError) {
+            res.status(400).json({ error: req.fileValidationError });
+        }
 
         const newCategory = await CategoryDetail.create({
             name: name,
@@ -19,7 +28,7 @@ const addCategory = async (req, res) => {
         res.json(newCategory);
     } catch (error) {
         console.log("Error creating category: ", error);
-        res.status(500).json({message: "Error creating category"});
+        res.status(500).json({ message: "Error creating category" });
     }
 }
 
@@ -41,11 +50,11 @@ const getCategory = async (req, res) => {
             data: categorys.rows,
             currentPage: parseInt(page),
             totalPages,
-            totalItems:categorys.count,
+            totalItems: categorys.count,
         });
     } catch (error) {
         console.log("Error while fetching category: ", error);
-        res.status(500).json({message:"Error while fetching category"});
+        res.status(500).json({ message: "Error while fetching category" });
     }
 }
 
@@ -89,6 +98,11 @@ const deleteCategory = async (req, res) => {
 
 const updateCategory = async (req, res) => {
     try {
+        if (req.fileValidationError) {
+            console.error(req.fileValidationError);
+            return res.status(400).json({ message: req.fileValidationError });
+        }
+
         // Find the category first to ensure it exists
         const category = await CategoryDetail.findByPk(req.params.id);
 

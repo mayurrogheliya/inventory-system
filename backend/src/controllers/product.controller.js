@@ -5,6 +5,11 @@ import { Op } from "sequelize";
 
 const addProduct = async (req, res) => {
     try {
+        if (req.fileValidationError) {
+            console.error(req.fileValidationError);
+            return res.status(400).json({ message: req.fileValidationError });
+        }
+
         const { name, category, price, status, weight } = req.body;
 
         console.log(req.body);
@@ -97,6 +102,10 @@ const deleteProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
     try {
+        if (req.fileValidationError) {
+            console.error(req.fileValidationError);
+            return res.status(400).json({ message: req.fileValidationError });
+        }
         const product = await ProductDetail.findByPk(req.params.id);
 
         if (!product) {

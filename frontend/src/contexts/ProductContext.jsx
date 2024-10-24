@@ -40,8 +40,13 @@ export const ProductProvider = ({ children }) => {
             console.log("Product added successfully: ", response.data);
             toast.success("Product added successfully")
         } catch (error) {
-            console.log("Product added failed: ", error);
-            toast.error("Error while creating product")
+            if (error.response && error.response.data && error.response.data.message) {
+                toast.error(error.response.data.message);
+                console.log("Error while creating product: ", error.response.data.message);
+            } else {
+                toast.error("An unexpected error occurred");
+                console.log("Error while creating product: ", error);
+            }
         }
     }
 
@@ -64,8 +69,13 @@ export const ProductProvider = ({ children }) => {
             console.log("Product updated successfully");
             toast.success("Product updated successfully");
         } catch (error) {
-            console.log("Error while updating product: ", error);
-            toast.error("Error while updating product");
+            if (error.response && error.response.data && error.response.data.message) {
+                toast.error(error.response.data.message);
+                console.log("Error while updating product: ", error.response.data.message);
+            } else {
+                toast.error("An unexpected error occurred");
+                console.log("Error while updating product: ", error);
+            }
         }
     }
 

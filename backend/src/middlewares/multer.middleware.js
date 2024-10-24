@@ -13,7 +13,8 @@ const filefilter = (req, file, cb) => {
     if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg' || file.mimetype === 'image/png') {
         cb(null, true);
     } else {
-        cb(new Error('Invalid file type. Only JPEG, PNG, and GIF are allowed!'), false, false);
+        req.fileValidationError = 'Invalid file type. Only JPEG, JPG and PNG are allowed!';
+        cb(null, false);
     }
 }
 

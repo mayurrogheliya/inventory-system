@@ -41,8 +41,13 @@ export const CategoryProvider = ({ children }) => {
             console.log("Category created successfully: ", response.data);
             toast.success("Category added successfully");
         } catch (error) {
-            console.log("Error creating category: ", error);
-            toast.error("Error while creating category");
+            if (error.response && error.response.data && error.response.data.message) {
+                toast.error(error.response.data.message);
+                console.log("Error while creating category: ", error.response.data.message);
+            } else {
+                toast.error("An unexpected error occurred");
+                console.log("Error while creating category: ", error);
+            }
         }
     }
 
@@ -65,8 +70,13 @@ export const CategoryProvider = ({ children }) => {
             console.log("Category updated successfully");
             toast.success("Category updated successfully");
         } catch (error) {
-            console.log("Error while updating category: ", error);
-            toast.error("Error while updating category");
+            if (error.response && error.response.data && error.response.data.message) {
+                toast.error(error.response.data.message);
+                console.log("Error while updating category: ", error.response.data.message);
+            } else {
+                toast.error("An unexpected error occurred");
+                console.log("Error while updating category: ", error);
+            }
         }
     }
 
