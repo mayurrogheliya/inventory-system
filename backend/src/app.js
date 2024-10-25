@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { categoryRouter, productRouter } from './routes/index.js';
+import { categoryRouter, customerRouter, productRouter } from './routes/index.js';
 
 const app = express();
 
@@ -22,6 +22,7 @@ app.use(express.static('public'));
 
 app.use("/api/categories", categoryRouter);
 app.use("/api/product", productRouter);
+app.use("/api/customer", customerRouter);
 
 app.get("/", (req, res) => {
     res.send("Hello from the server side!");
