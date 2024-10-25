@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/dbConfig.js";
+import Op from "sequelize";
 
 const CustomerDetails = sequelize.define(
     "CustomerDetails",
@@ -54,6 +55,29 @@ const CustomerDetails = sequelize.define(
             type: DataTypes.STRING,
             allowNull: true,
         }
-    });
+    },
+    {
+        indexes: [
+            {
+                unique: true,
+                fields: ["email"],
+                where: {
+                    email: {
+                        [Op.ne]: null, // Uniqueness only if email is not null
+                    },
+                },
+            },
+            {
+                unique: true,
+                fields: ["phone"],
+                where: {
+                    phone: {
+                        [Op.ne]: null, // Uniqueness only if phone is not null
+                    },
+                },
+            },
+        ],
+    }
+);
 
 export default CustomerDetails;
