@@ -9,16 +9,12 @@ const addCategory = async (req, res) => {
             console.error(req.fileValidationError);
             return res.status(400).json({ message: req.fileValidationError });
         }
-        
+
         const { name, status } = req.body;
 
         console.log(req.body);
 
         const imagePath = req.file ? `images/${req.file.filename}` : "";
-
-        if (req.fileValidationError) {
-            res.status(400).json({ error: req.fileValidationError });
-        }
 
         const newCategory = await CategoryDetail.create({
             name: name,
