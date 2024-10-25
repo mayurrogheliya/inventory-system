@@ -4,7 +4,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { CustomerContext } from '../../contexts/CustomerContext';
 
 const CustomerForm = ({ currentCustomer, setCurrentCustomer }) => {
-    const { addCustomer, updateCustomer } = useContext(CustomerContext);
+    const { customers, addCustomer, updateCustomer } = useContext(CustomerContext);
 
     const [customerItems, setCustomerItems] = useState({
         name: '',
@@ -52,6 +52,11 @@ const CustomerForm = ({ currentCustomer, setCurrentCustomer }) => {
 
     }, [currentCustomer]);
 
+    // Function to check if the customer name already exists
+    const doesNameExist = (name) => {
+        return customers.some((customer) => customer.name.toLowerCase() === name.toLowerCase() && customer.id !== currentCustomer?.id);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -59,6 +64,14 @@ const CustomerForm = ({ currentCustomer, setCurrentCustomer }) => {
         if (!customerItems.name) {
             setNameError('Name is required.');
             return;
+        } else {
+            setNameError('');
+        }
+
+        // Check if name already exists
+        if (doesNameExist(customerItems.name)) {
+            setNameError('Customer Name already exists.');
+            return; // Stop form submission
         } else {
             setNameError('');
         }
@@ -89,9 +102,9 @@ const CustomerForm = ({ currentCustomer, setCurrentCustomer }) => {
         }
 
         // Reset form after submission
+        setCustomerItems({ name: '', email: '', phone: '', country: '', state: '', city: '', pincode: '', occupation: '', dob: '', gender: '', address: '', image: '' });
         setCurrentCustomer(null);
         setImagePreview(null);
-        setCustomerItems({ name: '', email: '', phone: '', country: '', state: '', city: '', pincode: '', occupation: '', dob: '', gender: '', address: '', image: '' });
     };
 
     const handleOnChange = (e) => {
@@ -134,7 +147,7 @@ const CustomerForm = ({ currentCustomer, setCurrentCustomer }) => {
                 <form className='grid grid-cols-1 md:grid-cols-3 w-full my-3 gap-y-4 gap-x-3' onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor="name">Name</label>
-                        <input type="text" name="name" id="name" value={customerItems.name} onChange={handleOnChange} className={`border py-1 px-2 focus:outline-none w-full rounded-md ${nameError ? 'border-red-400' : 'border-gray-300'}`} />
+                        <input type="text" name="name" id="name" value={customerItems.name} onChange={handleOnChange} className={`border py-1 px-2 focus:outline-none w-full rounded-md ${nameError ? 'border-red-400' : 'border-gray-300'}`} autoFocus />
                         {nameError && <p className='text-red-500 text-sm'>{nameError}</p>}
                     </div>
                     <div>
