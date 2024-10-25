@@ -1,4 +1,3 @@
-// controllers/customer.controller.js
 import path from 'path';
 import fs from 'fs';
 import CustomerDetails from "../models/customer.model.js";
@@ -19,6 +18,23 @@ const addCustomer = async (req, res) => {
 
         const imagePath = req.file ? `images/${req.file.filename}` : "";
 
+        // Check for uniqueness only if email or phone is provided
+        if (phone || email) {
+            const existingCustomer = await CustomerDetails.findOne({
+                where: {
+                    [Op.or]: [
+                        { email: email },
+                        { phone: phone }
+                    ]
+                }
+            });
+
+            if (existingCustomer) {
+                const message = existingCustomer.email === email ? "Email already exists." : "Phone number already exists.";
+                return res.status(400).json({ message });
+            }
+        }
+
         const newCustomer = await CustomerDetails.create({
             name,
             email,
@@ -36,12 +52,6 @@ const addCustomer = async (req, res) => {
 
         res.json(newCustomer);
     } catch (error) {
-        if (error.name === "SequelizeUniqueConstraintError") {
-            const message = error.errors[0].path === 'email'
-                ? "Email already exists."
-                : "Phone number already exists.";
-            return res.status(400).json({ message });
-        }
         console.error("Error creating customer:", error);
         res.status(500).json({ message: "Error creating customer" });
     }
@@ -106,7 +116,6 @@ const deleteCustomer = async (req, res) => {
 
 const updateCustomer = async (req, res) => {
     try {
-
         if (req.fileValidationError) {
             console.error(req.fileValidationError);
             return res.status(400).json({ message: req.fileValidationError });
@@ -152,17 +161,10 @@ const updateCustomer = async (req, res) => {
             image: newImagePath
         };
 
-        // Update the customer with the new data
         await customer.update(updatedData);
 
         res.status(200).json({ message: 'Customer updated successfully', customer });
     } catch (error) {
-        if (error.name === "SequelizeUniqueConstraintError") {
-            const message = error.errors[0].path === 'email'
-                ? "Email already exists."
-                : "Phone number already exists.";
-            return res.status(400).json({ message });
-        }
         console.error("Error while updating customer:", error);
         res.status(500).json({ message: 'Internal Server Error', error });
     }
@@ -172,27 +174,24 @@ const searchCustomer = async (req, res) => {
     const searchTerm = req.query.q;
 
     try {
-        const results = await CustomerDetails.findAll(
-            {
-                where: {
-                    [Op.or]: [
-                        { name: { [Op.like]: `%${searchTerm}%` }, },
-                        { email: { [Op.like]: `%${searchTerm}%` }, },
-                        { phone: { [Op.like]: `%${searchTerm}%` }, },
-                        { country: { [Op.like]: `%${searchTerm}%` }, },
-                        { state: { [Op.like]: `%${searchTerm}%` }, },
-                        { city: { [Op.like]: `%${searchTerm}%` }, },
-                        { pincode: { [Op.like]: `%${searchTerm}%` }, },
-                        { address: { [Op.like]: `%${searchTerm}%` }, },
-                        { occupation: { [Op.like]: `%${searchTerm}%` }, },
-                        { gender: { [Op.like]: `%${searchTerm}%` }, },
-                    ]
-                },
-            }
-        );
+        const results = await CustomerDetails.findAll({
+            where: {
+                [Op.or]: [
+                    { name: { [Op.like]: `%${searchTerm}%` } },
+                    { email: { [Op.like]: `%${searchTerm}%` } },
+                    { phone: { [Op.like]: `%${searchTerm}%` } },
+                    { country: { [Op.like]: `%${searchTerm}%` } },
+                    { state: { [Op.like]: `%${searchTerm}%` } },
+                    { city: { [Op.like]: `%${searchTerm}%` } },
+                    { pincode: { [Op.like]: `%${searchTerm}%` } },
+                    { address: { [Op.like]: `%${searchTerm}%` } },
+                    { occupation: { [Op.like]: `%${searchTerm}%` } },
+                    { gender: { [Op.like]: `%${searchTerm}%` } }
+                ]
+            },
+        });
 
         res.json(results);
-
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });
