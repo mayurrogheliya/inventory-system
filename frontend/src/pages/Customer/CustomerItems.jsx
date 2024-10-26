@@ -41,7 +41,7 @@ const CustomerItems = ({ setCurrentCustomer }) => {
     }, [searchTerm, debouncedSearch]);
 
     const highlightText = (text, searchTerm) => {
-        if (!searchTerm) return text;
+        if (!searchTerm || !text) return text;
         const parts = text.split(new RegExp(`(${searchTerm})`, 'gi'));
         return parts.map((part, index) =>
             part.toLowerCase() === searchTerm.toLowerCase() ?
