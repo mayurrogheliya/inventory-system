@@ -18,27 +18,14 @@ const addCustomer = async (req, res) => {
 
         const imagePath = req.file ? `images/${req.file.filename}` : "";
 
-        // Check for uniqueness only if email or phone is provided
-        if (phone || email) {
-            const existingCustomer = await CustomerDetails.findOne({
-                where: {
-                    [Op.or]: [
-                        { email: email },
-                        { phone: phone }
-                    ]
-                }
-            });
-
-            if (existingCustomer) {
-                const message = existingCustomer.email === email ? "Email already exists." : "Phone number already exists.";
-                return res.status(400).json({ message });
-            }
-        }
+        // Store NULL in the database for empty email or phone to avoid uniqueness constraint issues
+        const emailToStore = email ? email : null;
+        const phoneToStore = phone ? phone : null;
 
         const newCustomer = await CustomerDetails.create({
             name,
-            email,
-            phone,
+            email: emailToStore,
+            phone: phoneToStore,
             country,
             state,
             city,
@@ -50,10 +37,33 @@ const addCustomer = async (req, res) => {
             image: imagePath
         });
 
-        res.json(newCustomer);
+        // Send success response
+        res.status(201).json({
+            message: "Customer added successfully",
+            data: newCustomer,
+        });
     } catch (error) {
-        console.error("Error creating customer:", error);
-        res.status(500).json({ message: "Error creating customer" });
+        // Check if the error is a Sequelize validation error
+        if (error.name === "SequelizeUniqueConstraintError") {
+            // Handle unique constraint errors for email or phone
+            const field = error.errors[0].path;
+            res.status(400).json({
+                message: `The ${field} is already in use.`,
+            });
+        } else if (error.name === "SequelizeValidationError") {
+            // Handle validation errors (e.g., required fields)
+            const errors = error.errors.map((err) => err.message);
+            res.status(400).json({
+                message: "Validation error",
+                errors,
+            });
+        } else {
+            // Handle all other errors
+            res.status(500).json({
+                message: "An unexpected error occurred",
+                error: error.message,
+            });
+        }
     }
 };
 
@@ -70,8 +80,15 @@ const getCustomers = async (req, res) => {
 
         const totalPages = Math.ceil(customers.count / limit);
 
+        // Replace null email and phone with empty strings
+        const modifiedCustomers = customers.rows.map(customer => ({
+            ...customer.dataValues,
+            email: customer.email || '',  // Replace null email with ''
+            phone: customer.phone || '',    // Replace null phone with ''
+        }));
+
         res.json({
-            data: customers.rows,
+            data: modifiedCustomers,
             currentPage: parseInt(page),
             totalPages,
             totalItems: customers.count,
@@ -116,57 +133,62 @@ const deleteCustomer = async (req, res) => {
 
 const updateCustomer = async (req, res) => {
     try {
-        if (req.fileValidationError) {
-            console.error(req.fileValidationError);
-            return res.status(400).json({ message: req.fileValidationError });
-        }
+        const { id } = req.params;
+        const { name, email, phone, country, state, city, pincode, occupation, dob, gender, address } = req.body;
 
-        const customer = await CustomerDetails.findByPk(req.params.id);
-
+        // Check if the customer exists
+        const customer = await CustomerDetails.findByPk(id);
         if (!customer) {
-            return res.status(404).json({ message: 'Customer not found' });
+            return res.status(404).json({ message: "Customer not found." });
         }
 
-        let newImagePath = customer.image;
+        // Set image path if a new file is uploaded
+        const imagePath = req.file ? `images/${req.file.filename}` : customer.image;
 
-        if (req.file) {
-            newImagePath = `images/${req.file.filename}`;
-
-            if (customer.image) {
-                const oldImagePath = path.join(process.cwd(), 'public', customer.image);
-
-                fs.unlink(oldImagePath, function (err) {
-                    if (err) {
-                        console.error("Error deleting image file:", err);
-                    } else {
-                        console.log(`Image file ${oldImagePath} deleted successfully`);
-                    }
-                });
-            }
-        }
-
-        // Prepare updated data
+        // Prepare updated fields, storing NULL if email or phone is empty
         const updatedData = {
-            name: req.body.name || customer.name,
-            email: req.body.email || customer.email,
-            phone: req.body.phone || customer.phone,
-            country: req.body.country || customer.country,
-            state: req.body.state || customer.state,
-            city: req.body.city || customer.city,
-            pincode: req.body.pincode || customer.pincode,
-            occupation: req.body.occupation || customer.occupation,
-            dob: req.body.dob || customer.dob,
-            gender: req.body.gender || customer.gender,
-            address: req.body.address || customer.address,
-            image: newImagePath
+            name: name || customer.name,
+            email: email ? email : null,
+            phone: phone ? phone : null,
+            country: country || customer.country,
+            state: state || customer.state,
+            city: city || customer.city,
+            pincode: pincode || customer.pincode,
+            occupation: occupation || customer.occupation,
+            dob: dob || customer.dob,
+            gender: gender || customer.gender,
+            address: address || customer.address,
+            image: imagePath,
         };
 
+        // Update customer with new data
         await customer.update(updatedData);
 
-        res.status(200).json({ message: 'Customer updated successfully', customer });
+        // Send success response
+        res.status(200).json({
+            message: "Customer updated successfully",
+            data: customer,
+        });
     } catch (error) {
-        console.error("Error while updating customer:", error);
-        res.status(500).json({ message: 'Internal Server Error', error });
+        // Handle unique constraint errors
+        if (error.name === "SequelizeUniqueConstraintError") {
+            const field = error.errors[0].path;
+            res.status(400).json({
+                message: `The ${field} is already in use.`,
+            });
+        } else if (error.name === "SequelizeValidationError") {
+            const errors = error.errors.map((err) => err.message);
+            res.status(400).json({
+                message: "Validation error",
+                errors,
+            });
+        } else {
+            // Handle all other errors
+            res.status(500).json({
+                message: "An unexpected error occurred",
+                error: error.message,
+            });
+        }
     }
 };
 
