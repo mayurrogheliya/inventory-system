@@ -1,6 +1,5 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Op } from "sequelize";
 import sequelize from "../db/dbConfig.js";
-import Op from "sequelize";
 
 const CustomerDetails = sequelize.define(
     "CustomerDetails",
