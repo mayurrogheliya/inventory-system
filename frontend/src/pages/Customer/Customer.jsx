@@ -182,7 +182,7 @@ const CustomerForm = ({ currentCustomer, setCurrentCustomer }) => {
                     </div>
                     <div>
                         <label htmlFor="dob">Date of Birth</label>
-                        <input type="date" name="dob" id="dob" value={customerItems.dob} onChange={handleOnChange} className='border py-1 px-2 focus:outline-none w-full rounded-md border-gray-300' />
+                        <input type="date" name="dob" id="dob" value={customerItems.dob} max={new Date().toISOString().split("T")[0]} onChange={handleOnChange} className='border py-1 px-2 focus:outline-none w-full rounded-md border-gray-300' />
                     </div>
                     <div>
                         <label htmlFor="gender">Gender</label>
