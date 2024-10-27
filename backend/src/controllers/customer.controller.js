@@ -85,6 +85,12 @@ const getCustomers = async (req, res) => {
             ...customer.dataValues,
             email: customer.email || '',  // Replace null email with ''
             phone: customer.phone || '',    // Replace null phone with ''
+            country: customer.country || '',
+            state: customer.state || '',
+            city: customer.city || '',
+            pincode: customer.pincode || '',
+            occupation: customer.occupation || '',
+            address: customer.address || '',
         }));
 
         res.json({
