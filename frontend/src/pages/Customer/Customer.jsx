@@ -2,6 +2,7 @@
 
 import { useContext, useEffect, useRef, useState } from 'react';
 import { CustomerContext } from '../../contexts/CustomerContext';
+import { Country, State, City } from 'country-state-city';
 
 const CustomerForm = ({ currentCustomer, setCurrentCustomer }) => {
     const { customers, addCustomer, updateCustomer } = useContext(CustomerContext);
@@ -20,6 +21,27 @@ const CustomerForm = ({ currentCustomer, setCurrentCustomer }) => {
         address: '',
         image: ''
     });
+
+    // country, state, city
+    const [countryOptions, setCountryOptions] = useState([]);
+    const [stateOptions, setStateOptions] = useState([]);
+    const [cityOptions, setCityOptions] = useState([]);
+
+    useEffect(() => {
+        setCountryOptions(Country.getAllCountries());
+    }, []);
+
+    useEffect(() => {
+        if (customerItems.country) {
+            setStateOptions(State.getStatesOfCountry(customerItems.country));
+        }
+    }, [customerItems.country]);
+
+    useEffect(() => {
+        if (customerItems.state) {
+            setCityOptions(City.getCitiesOfState(customerItems.country, customerItems.state));
+        }
+    }, [customerItems.state]);
 
     const imageRef = useRef(null);
     const [imagePreview, setImagePreview] = useState(null);
@@ -129,6 +151,13 @@ const CustomerForm = ({ currentCustomer, setCurrentCustomer }) => {
             setIsPincodeValid(isValid);
             setPincodeError(isValid ? '' : 'Pincode must be exactly 6 digits and numeric.');
         }
+
+        // Reset dependent selections if necessary
+        if (name === 'country') {
+            setCustomerItems((prevItems) => ({ ...prevItems, state: '', city: '' }));
+        } else if (name === 'state') {
+            setCustomerItems((prevItems) => ({ ...prevItems, city: '' }));
+        }
     };
 
     const handleImageChange = (e) => {
@@ -162,15 +191,51 @@ const CustomerForm = ({ currentCustomer, setCurrentCustomer }) => {
                     </div>
                     <div>
                         <label htmlFor="country">Country</label>
-                        <input type="text" name="country" id="country" value={customerItems.country} onChange={handleOnChange} className='border py-1 px-2 focus:outline-none w-full rounded-md border-gray-300' />
+                        <select
+                            name="country"
+                            value={customerItems.country}
+                            onChange={handleOnChange}
+                            className="border py-1 px-2 w-full rounded-md border-gray-300"
+                        >
+                            <option value="">Select Country</option>
+                            {countryOptions.map((country) => (
+                                <option key={country.isoCode} value={country.isoCode}>
+                                    {country.name}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                     <div>
                         <label htmlFor="state">State</label>
-                        <input type="text" name="state" id="state" value={customerItems.state} onChange={handleOnChange} className='border py-1 px-2 focus:outline-none w-full rounded-md border-gray-300' />
+                        <select
+                            name="state"
+                            value={customerItems.state}
+                            onChange={handleOnChange}
+                            className="border py-1 px-2 w-full rounded-md border-gray-300"
+                        >
+                            <option value="">Select State</option>
+                            {stateOptions.map((state) => (
+                                <option key={state.isoCode} value={state.isoCode}>
+                                    {state.name}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                     <div>
                         <label htmlFor="city">City</label>
-                        <input type="text" name="city" id="city" value={customerItems.city} onChange={handleOnChange} className='border py-1 px-2 focus:outline-none w-full rounded-md border-gray-300' />
+                        <select
+                            name="city"
+                            value={customerItems.city}
+                            onChange={handleOnChange}
+                            className="border py-1 px-2 w-full rounded-md border-gray-300"
+                        >
+                            <option value="">Select City</option>
+                            {cityOptions.map((city) => (
+                                <option key={city.name} value={city.name}>
+                                    {city.name}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                     <div>
                         <label htmlFor="pincode">Pincode</label>
