@@ -16,7 +16,7 @@ const CustomerForm = ({ currentCustomer, setCurrentCustomer }) => {
         pincode: '',
         occupation: '',
         dob: '',
-        gender: '',
+        gender: 'Male',
         address: '',
         image: ''
     });
@@ -33,7 +33,8 @@ const CustomerForm = ({ currentCustomer, setCurrentCustomer }) => {
         if (currentCustomer) {
             setCustomerItems({
                 ...currentCustomer,
-                dob: currentCustomer.dob ? currentCustomer.dob.split('T')[0] : '', // Format date for input
+                dob: currentCustomer.dob ? currentCustomer.dob.split('T')[0] : '',  // Format date for input
+                gender: currentCustomer.gender || 'Male',
                 image: ''
             });
             if (currentCustomer.image) {
@@ -102,7 +103,7 @@ const CustomerForm = ({ currentCustomer, setCurrentCustomer }) => {
         }
 
         // Reset form after submission
-        setCustomerItems({ name: '', email: '', phone: '', country: '', state: '', city: '', pincode: '', occupation: '', dob: '', gender: '', address: '', image: '' });
+        setCustomerItems({ name: '', email: '', phone: '', country: '', state: '', city: '', pincode: '', occupation: '', dob: '', gender: 'Male', address: '', image: '' });
         setCurrentCustomer(null);
         setImagePreview(null);
     };
@@ -230,7 +231,7 @@ const CustomerForm = ({ currentCustomer, setCurrentCustomer }) => {
                     {/* Image upload */}
                     <div>
                         <label htmlFor="image">Upload Image</label>
-                        <input type="file" name="image" id="image" ref={imageRef} onChange={handleImageChange} className='bg-gray-100 w-full rounded-md p-2 border border-gray-300 focus:outline-none hover:cursor-pointer' />
+                        <input type="file" name="image" id="image" ref={imageRef} onChange={handleImageChange} className='bg-gray-100 w-full rounded-md p-2 border border-gray-300 focus:outline-none hover:cursor-pointer' accept='.jpeg, .jpg, .png' />
                         {imagePreview && (
                             <img src={imagePreview} alt='Preview' className='w-12 h-12 mt-2' />
                         )}
