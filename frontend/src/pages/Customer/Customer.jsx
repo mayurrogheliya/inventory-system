@@ -11,9 +11,9 @@ const CustomerForm = ({ currentCustomer, setCurrentCustomer }) => {
         name: '',
         email: '',
         phone: '',
-        country: '',
-        state: '',
-        city: '',
+        country: 'IN', // Default value for country
+        state: 'GJ',   // Default value for state
+        city: 'Rajkot', // Default value for city
         pincode: '',
         occupation: '',
         dob: '',
@@ -65,7 +65,7 @@ const CustomerForm = ({ currentCustomer, setCurrentCustomer }) => {
                 setImagePreview(null);
             }
         } else {
-            setCurrentCustomer({ name: '', email: '', phone: '', country: '', state: '', city: '', pincode: '', occupation: '', dob: '', gender: '', address: '', image: '' });
+            setCustomerItems({ name: '', email: '', phone: '', country: 'IN', state: 'GJ', city: 'Rajkot', pincode: '', occupation: '', dob: '', gender: 'Male', address: '', image: '' });
             setImagePreview(null);
         }
 
@@ -125,10 +125,37 @@ const CustomerForm = ({ currentCustomer, setCurrentCustomer }) => {
         }
 
         // Reset form after submission
-        setCustomerItems({ name: '', email: '', phone: '', country: '', state: '', city: '', pincode: '', occupation: '', dob: '', gender: 'Male', address: '', image: '' });
+        setCustomerItems({ name: '', email: '', phone: '', country: 'IN', state: 'GJ', city: 'Rajkot', pincode: '', occupation: '', dob: '', gender: 'Male', address: '', image: '' });
         setCurrentCustomer(null);
         setImagePreview(null);
     };
+
+    useEffect(() => {
+        if (countryOptions.length > 0) {
+            setCustomerItems((prevItems) => ({
+                ...prevItems,
+                country: 'IN', // or another preferred default
+            }));
+        }
+    }, [countryOptions]);
+
+    useEffect(() => {
+        if (stateOptions.length > 0) {
+            setCustomerItems((prevItems) => ({
+                ...prevItems,
+                state: 'GJ', // or another preferred default
+            }));
+        }
+    }, [stateOptions]);
+
+    useEffect(() => {
+        if (cityOptions.length > 0) {
+            setCustomerItems((prevItems) => ({
+                ...prevItems,
+                city: 'Rajkot', // or another preferred default
+            }));
+        }
+    }, [cityOptions]);
 
     const handleOnChange = (e) => {
         const { name, value } = e.target;
@@ -197,7 +224,6 @@ const CustomerForm = ({ currentCustomer, setCurrentCustomer }) => {
                             onChange={handleOnChange}
                             className="border py-1 px-2 w-full rounded-md border-gray-300"
                         >
-                            <option value="">Select Country</option>
                             {countryOptions.map((country) => (
                                 <option key={country.isoCode} value={country.isoCode}>
                                     {country.name}
@@ -213,7 +239,6 @@ const CustomerForm = ({ currentCustomer, setCurrentCustomer }) => {
                             onChange={handleOnChange}
                             className="border py-1 px-2 w-full rounded-md border-gray-300"
                         >
-                            <option value="">Select State</option>
                             {stateOptions.map((state) => (
                                 <option key={state.isoCode} value={state.isoCode}>
                                     {state.name}
@@ -229,7 +254,6 @@ const CustomerForm = ({ currentCustomer, setCurrentCustomer }) => {
                             onChange={handleOnChange}
                             className="border py-1 px-2 w-full rounded-md border-gray-300"
                         >
-                            <option value="">Select City</option>
                             {cityOptions.map((city) => (
                                 <option key={city.name} value={city.name}>
                                     {city.name}
