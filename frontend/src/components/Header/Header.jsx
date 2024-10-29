@@ -1,51 +1,83 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClose, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
 
 export const Header = () => {
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
+
     return (
         <>
-            <header className="shadow-sm  top-0">
-                <nav className="bg-white border-gray-200 px-2 lg:px-6">
-                    <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-                        <div
-                            className="my-4 justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
-                        >
-                            <ul className="flex flex-col mt-4 gap-2 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
-                                <li>
-                                    <NavLink
-                                        to=""
-                                        className={({ isActive }) =>
-                                            `block pr-4 pl-3 no-underline duration-200 ${isActive ? "text-orange-700" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0`
-                                        }
-                                    >
-                                        Category
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink
-                                        to="/products"
-                                        className={({ isActive }) =>
-                                            `block pr-4 pl-3 no-underline duration-200 ${isActive ? "text-orange-700" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0`
-                                        }
-                                    >
-                                        Product
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink
-                                        to="/customer"
-                                        className={({ isActive }) =>
-                                            `block pr-4 pl-3 no-underline duration-200 ${isActive ? "text-orange-700" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0`
-                                        }
-                                    >
-                                        Customer
-                                    </NavLink>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-            </header>
-        </>
-    )
-}
+            {/* Menu Button for Mobile */}
+            <button
+                className="relative md:hidden z-20 bg-gray-200 py-1 px-1 rounded-md hover:ring-1 hover:ring-black"
+                onClick={toggleSidebar}
+            >
+                <FontAwesomeIcon icon={faRightFromBracket} />
+            </button>
 
+            {/* Sidebar */}
+            <aside className={`fixed inset-y-0 left-0 md:w-52 bg-white shadow-lg z-30 lg:relative lg:w-64 flex flex-col h-screen transform transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+                } md:translate-x-0 md:block`}>
+                <div className="flex flex-col justify-between h-full">
+                    {/* Logo or Title */}
+                    <div className='flex justify-between bg-gray-100 p-4 gap-3 items-center'>
+                        <div className="text-xl font-semibold text-center text-orange-700">Inventory System</div>
+                        <button
+                            className='bg-gray-200 px-3 py-1 rounded-md hover:ring-1 hover:ring-black hover:cursor-pointer md:hidden'
+                            onClick={toggleSidebar}
+                        >
+                            <FontAwesomeIcon icon={faClose} />
+                        </button>
+                    </div>
+
+                    {/* Navigation Links */}
+                    <nav className="flex flex-col mt-4 space-y-2 px-4">
+                        <NavLink
+                            to=""
+                            onClick={toggleSidebar}
+                            className={({ isActive }) =>
+                                `block py-2 px-4 rounded ${isActive ? "hover:bg-orange-700" : "hover:bg-gray-100"} transition-colors duration-200 ${isActive ? "bg-orange-700 text-white" : "text-gray-700"}`
+                            }
+                        >
+                            Category
+                        </NavLink>
+                        <NavLink
+                            to="/products"
+                            onClick={toggleSidebar}
+                            className={({ isActive }) =>
+                                `block py-2 px-4 rounded ${isActive ? "hover:bg-orange-700" : "hover:bg-gray-100"} transition-colors duration-200 ${isActive ? "bg-orange-700 text-white" : "text-gray-700"}`
+                            }
+                        >
+                            Product
+                        </NavLink>
+                        <NavLink
+                            to="/customer"
+                            onClick={toggleSidebar}
+                            className={({ isActive }) =>
+                                `block py-2 px-4 rounded ${isActive ? "hover:bg-orange-700" : "hover:bg-gray-100"} transition-colors duration-200 ${isActive ? "bg-orange-700 text-white" : "text-gray-700"}`
+                            }
+                        >
+                            Customer
+                        </NavLink>
+                    </nav>
+
+                    {/* Footer */}
+                    <div className="mt-auto p-4 text-center text-gray-500 bg-gray-100">All rights reserved</div>
+                </div>
+            </aside>
+
+            {/* Overlay */}
+            {isSidebarOpen && (
+                <div
+                    className="fixed inset-0 bg-black opacity-50 z-20 md:hidden"
+                    onClick={toggleSidebar}
+                />
+            )}
+        </>
+    );
+};
