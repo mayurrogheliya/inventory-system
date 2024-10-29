@@ -64,7 +64,7 @@ const CategoryItems = ({ setCurrentCategory }) => {
 
     return (
         <div>
-            <div className='md:mx-5 md:px-4 sm:mx-4 sm:px-3 mx-3 px-2'>
+            <div>
                 <div className='flex justify-between items-start flex-col sm:flex-row gap-y-4'>
                     <h1 className='font-bold sm:text-3xl text-2xl'>Available Category</h1>
                     <div className='border rounded flex items-center'>

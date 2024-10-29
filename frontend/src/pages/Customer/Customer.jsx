@@ -199,142 +199,140 @@ const CustomerForm = ({ currentCustomer, setCurrentCustomer }) => {
 
     return (
         <div>
-            <div className='md:m-5 md:p-4 sm:m-4 sm:p-3 m-3 p-2'>
-                <h1 className='font-bold sm:text-3xl text-2xl'>{customerItems.id ? 'Update Customer' : "Add Customer"}</h1>
-                <form className='grid grid-cols-1 md:grid-cols-3 w-full my-3 gap-y-4 gap-x-3' onSubmit={handleSubmit}>
-                    <div>
-                        <label htmlFor="name">Name</label>
-                        <input type="text" name="name" id="name" value={customerItems.name} onChange={handleOnChange} className={`border py-1 px-2 focus:outline-none w-full rounded-md ${nameError ? 'border-red-400' : 'border-gray-300'}`} autoFocus />
-                        {nameError && <p className='text-red-500 text-sm'>{nameError}</p>}
+            <h1 className='font-bold sm:text-3xl text-2xl'>{customerItems.id ? 'Update Customer' : "Add Customer"}</h1>
+            <form className='grid grid-cols-1 md:grid-cols-3 w-full my-3 gap-y-4 gap-x-3' onSubmit={handleSubmit}>
+                <div>
+                    <label htmlFor="name">Name</label>
+                    <input type="text" name="name" id="name" value={customerItems.name} onChange={handleOnChange} className={`border py-1 px-2 focus:outline-none w-full rounded-md ${nameError ? 'border-red-400' : 'border-gray-300'}`} autoFocus />
+                    {nameError && <p className='text-red-500 text-sm'>{nameError}</p>}
+                </div>
+                <div>
+                    <label htmlFor="email">Email</label>
+                    <input type="email" name="email" id="email" value={customerItems.email} onChange={handleOnChange} className='border py-1 px-2 focus:outline-none w-full rounded-md border-gray-300' />
+                </div>
+                <div>
+                    <label htmlFor="phone">Phone</label>
+                    <input type="text" name="phone" id="phone" value={customerItems.phone} onChange={handleOnChange} className={`border py-1 px-2 focus:outline-none w-full rounded-md ${isPhoneValid ? 'border-gray-300' : 'border-red-400'}`} />
+                    {phoneError && <p className="text-red-500 text-sm">{phoneError}</p>}
+                </div>
+                <div>
+                    <label htmlFor="country">Country</label>
+                    <select
+                        name="country"
+                        value={customerItems.country}
+                        onChange={handleOnChange}
+                        className="border py-1 px-2 w-full rounded-md border-gray-300"
+                    >
+                        {countryOptions.map((country) => (
+                            <option key={country.isoCode} value={country.isoCode}>
+                                {country.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div>
+                    <label htmlFor="state">State</label>
+                    <select
+                        name="state"
+                        value={customerItems.state}
+                        onChange={handleOnChange}
+                        className="border py-1 px-2 w-full rounded-md border-gray-300"
+                    >
+                        {stateOptions.map((state) => (
+                            <option key={state.isoCode} value={state.isoCode}>
+                                {state.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div>
+                    <label htmlFor="city">City</label>
+                    <select
+                        name="city"
+                        value={customerItems.city}
+                        onChange={handleOnChange}
+                        className="border py-1 px-2 w-full rounded-md border-gray-300"
+                    >
+                        {cityOptions.map((city) => (
+                            <option key={city.name} value={city.name}>
+                                {city.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div>
+                    <label htmlFor="pincode">Pincode</label>
+                    <input type="text" name="pincode" id="pincode" value={customerItems.pincode} onChange={handleOnChange} className={`border py-1 px-2 focus:outline-none w-full rounded-md ${isPincodeValid ? 'border-gray-300' : 'border-red-400'}`} />
+                    {pincodeError && <p className="text-red-500 text-sm">{pincodeError}</p>}
+                </div>
+                <div>
+                    <label htmlFor="occupation">Occupation</label>
+                    <input type="text" name="occupation" id="occupation" value={customerItems.occupation} onChange={handleOnChange} className='border py-1 px-2 focus:outline-none w-full rounded-md border-gray-300' />
+                </div>
+                <div>
+                    <label htmlFor="dob">Date of Birth</label>
+                    <input type="date" name="dob" id="dob" value={customerItems.dob} max={new Date().toISOString().split("T")[0]} onChange={handleOnChange} className='border py-1 px-2 focus:outline-none w-full rounded-md border-gray-300' />
+                </div>
+                <div>
+                    <label htmlFor="gender">Gender</label>
+                    <div className='flex gap-4'>
+                        <label>
+                            <input
+                                type="radio"
+                                name="gender"
+                                value="Male"
+                                checked={customerItems.gender === 'Male'}
+                                onChange={handleOnChange}
+                                className="mr-1"
+                            />
+                            Male
+                        </label>
+                        <label>
+                            <input
+                                type="radio"
+                                name="gender"
+                                value="Female"
+                                checked={customerItems.gender === 'Female'}
+                                onChange={handleOnChange}
+                                className="mr-1"
+                            />
+                            Female
+                        </label>
+                        <label>
+                            <input
+                                type="radio"
+                                name="gender"
+                                value="Other"
+                                checked={customerItems.gender === 'Other'}
+                                onChange={handleOnChange}
+                                className="mr-1"
+                            />
+                            Other
+                        </label>
                     </div>
-                    <div>
-                        <label htmlFor="email">Email</label>
-                        <input type="email" name="email" id="email" value={customerItems.email} onChange={handleOnChange} className='border py-1 px-2 focus:outline-none w-full rounded-md border-gray-300' />
-                    </div>
-                    <div>
-                        <label htmlFor="phone">Phone</label>
-                        <input type="text" name="phone" id="phone" value={customerItems.phone} onChange={handleOnChange} className={`border py-1 px-2 focus:outline-none w-full rounded-md ${isPhoneValid ? 'border-gray-300' : 'border-red-400'}`} />
-                        {phoneError && <p className="text-red-500 text-sm">{phoneError}</p>}
-                    </div>
-                    <div>
-                        <label htmlFor="country">Country</label>
-                        <select
-                            name="country"
-                            value={customerItems.country}
-                            onChange={handleOnChange}
-                            className="border py-1 px-2 w-full rounded-md border-gray-300"
-                        >
-                            {countryOptions.map((country) => (
-                                <option key={country.isoCode} value={country.isoCode}>
-                                    {country.name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div>
-                        <label htmlFor="state">State</label>
-                        <select
-                            name="state"
-                            value={customerItems.state}
-                            onChange={handleOnChange}
-                            className="border py-1 px-2 w-full rounded-md border-gray-300"
-                        >
-                            {stateOptions.map((state) => (
-                                <option key={state.isoCode} value={state.isoCode}>
-                                    {state.name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div>
-                        <label htmlFor="city">City</label>
-                        <select
-                            name="city"
-                            value={customerItems.city}
-                            onChange={handleOnChange}
-                            className="border py-1 px-2 w-full rounded-md border-gray-300"
-                        >
-                            {cityOptions.map((city) => (
-                                <option key={city.name} value={city.name}>
-                                    {city.name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div>
-                        <label htmlFor="pincode">Pincode</label>
-                        <input type="text" name="pincode" id="pincode" value={customerItems.pincode} onChange={handleOnChange} className={`border py-1 px-2 focus:outline-none w-full rounded-md ${isPincodeValid ? 'border-gray-300' : 'border-red-400'}`} />
-                        {pincodeError && <p className="text-red-500 text-sm">{pincodeError}</p>}
-                    </div>
-                    <div>
-                        <label htmlFor="occupation">Occupation</label>
-                        <input type="text" name="occupation" id="occupation" value={customerItems.occupation} onChange={handleOnChange} className='border py-1 px-2 focus:outline-none w-full rounded-md border-gray-300' />
-                    </div>
-                    <div>
-                        <label htmlFor="dob">Date of Birth</label>
-                        <input type="date" name="dob" id="dob" value={customerItems.dob} max={new Date().toISOString().split("T")[0]} onChange={handleOnChange} className='border py-1 px-2 focus:outline-none w-full rounded-md border-gray-300' />
-                    </div>
-                    <div>
-                        <label htmlFor="gender">Gender</label>
-                        <div className='flex gap-4'>
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="gender"
-                                    value="Male"
-                                    checked={customerItems.gender === 'Male'}
-                                    onChange={handleOnChange}
-                                    className="mr-1"
-                                />
-                                Male
-                            </label>
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="gender"
-                                    value="Female"
-                                    checked={customerItems.gender === 'Female'}
-                                    onChange={handleOnChange}
-                                    className="mr-1"
-                                />
-                                Female
-                            </label>
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="gender"
-                                    value="Other"
-                                    checked={customerItems.gender === 'Other'}
-                                    onChange={handleOnChange}
-                                    className="mr-1"
-                                />
-                                Other
-                            </label>
-                        </div>
-                    </div>
-                    <div>
-                        <label htmlFor="address">Address</label>
-                        <textarea name="address" id="address" value={customerItems.address} onChange={handleOnChange} className='border py-1 px-2 focus:outline-none w-full rounded-md border-gray-300'></textarea>
-                    </div>
+                </div>
+                <div>
+                    <label htmlFor="address">Address</label>
+                    <textarea name="address" id="address" value={customerItems.address} onChange={handleOnChange} className='border py-1 px-2 focus:outline-none w-full rounded-md border-gray-300'></textarea>
+                </div>
 
-                    {/* Image upload */}
-                    <div>
-                        <label htmlFor="image">Upload Image</label>
-                        <input type="file" name="image" id="image" ref={imageRef} onChange={handleImageChange} className='bg-gray-100 w-full rounded-md p-2 border border-gray-300 focus:outline-none hover:cursor-pointer' accept='.jpeg, .jpg, .png' />
-                        {imagePreview && (
-                            <img src={imagePreview} alt='Preview' className='w-12 h-12 mt-2' />
-                        )}
-                    </div>
+                {/* Image upload */}
+                <div>
+                    <label htmlFor="image">Upload Image</label>
+                    <input type="file" name="image" id="image" ref={imageRef} onChange={handleImageChange} className='bg-gray-100 w-full rounded-md p-2 border border-gray-300 focus:outline-none hover:cursor-pointer' accept='.jpeg, .jpg, .png' />
+                    {imagePreview && (
+                        <img src={imagePreview} alt='Preview' className='w-12 h-12 mt-2' />
+                    )}
+                </div>
 
-                    {/* Submit button */}
-                    <div>
-                        <button type='submit' className='bg-blue-600 w-full sm:w-auto text-white self-start py-1 px-4 mt-3 text-lg rounded-lg hover:bg-blue-700'>
-                            {customerItems.id ? 'Update Customer' : 'Add Customer'}
-                        </button>
-                    </div>
+                {/* Submit button */}
+                <div>
+                    <button type='submit' className='bg-blue-600 w-full sm:w-auto text-white self-start py-1 px-4 mt-3 text-lg rounded-lg hover:bg-blue-700'>
+                        {customerItems.id ? 'Update Customer' : 'Add Customer'}
+                    </button>
+                </div>
 
-                </form>
-            </div>
+            </form>
         </div>
     );
 };
