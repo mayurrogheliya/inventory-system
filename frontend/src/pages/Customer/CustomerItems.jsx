@@ -1,11 +1,17 @@
 /* eslint-disable react/prop-types */
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare, faSearch, faSort, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faPlus, faSearch, faSort, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { CustomerContext } from '../../contexts';
 import debounce from 'lodash.debounce';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 
-const CustomerItems = ({ setCurrentCustomer }) => {
+const CustomerItems = () => {
+
+    const { setCurrentCustomer } = useOutletContext();
+
+    const navigate = useNavigate();
+
     const { customers, deleteCustomer, searchCustomer, getCustomers, pagination } = useContext(CustomerContext);
     const [sortConfig, setSortConfig] = useState({ field: 'name', isAscending: true });
     const [searchTerm, setSearchTerm] = useState('');
@@ -55,8 +61,20 @@ const CustomerItems = ({ setCurrentCustomer }) => {
         }
     };
 
+    const handleItemClick = (item) => {
+        setCurrentCustomer(item); // Set the current customer
+        if (item) {
+            navigate('/customer/updateCustomer'); // Navigate to the updateCustomer route
+        } else {
+            navigate('/customer/addCustomer'); // Navigate to the addCustomer route
+        }
+    };
+
     return (
         <div>
+            <div className='flex justify-end mb-3'>
+                <button className='text-white bg-blue-600 py-1 px-3 rounded-md' onClick={() => handleItemClick(null)}>Add <FontAwesomeIcon icon={faPlus} /></button>
+            </div>
             <div>
                 <div className='flex justify-between items-start flex-col sm:flex-row gap-y-4'>
                     <h1 className='font-bold sm:text-3xl text-2xl'>Available Customers</h1>
@@ -189,7 +207,7 @@ const CustomerItems = ({ setCurrentCustomer }) => {
                                             }
                                         </td>
                                         <td className='border border-slate-700 px-2'>
-                                            <button className='m-1 bg-green-500 hover:bg-green-600 text-white rounded-md sm:px-4 px-2 py-1' onClick={() => setCurrentCustomer(item)}><FontAwesomeIcon icon={faPenToSquare} /></button>
+                                            <button className='m-1 bg-green-500 hover:bg-green-600 text-white rounded-md sm:px-4 px-2 py-1' onClick={() => handleItemClick(item)}><FontAwesomeIcon icon={faPenToSquare} /></button>
                                             <button className='m-1 bg-red-500 hover:bg-red-600 text-white rounded-md sm:px-4 px-2 py-1' onClick={() => deleteCustomer(item.id)}><FontAwesomeIcon icon={faTrash} /></button>
                                         </td>
                                     </tr>
