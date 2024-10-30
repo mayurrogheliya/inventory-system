@@ -2,11 +2,16 @@
 
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare, faSearch, faSort, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faPlus, faSearch, faSort, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { CategoryContext } from '../../contexts';
 import debounce from 'lodash.debounce'
+import { useNavigate, useOutletContext } from 'react-router-dom';
 
-const CategoryItems = ({ setCurrentCategory }) => {
+const CategoryItems = () => {
+
+    const { setCurrentCategory } = useOutletContext();
+
+    const navigate = useNavigate();
 
     const { categorys, deleteCategory, searchCategory, getCategoryies, pagination } = useContext(CategoryContext);
 
@@ -62,8 +67,20 @@ const CategoryItems = ({ setCurrentCategory }) => {
         }
     };
 
+    const handleItemClick = (item) => {
+        setCurrentCategory(item); // Set the current category
+        if (item) {
+            navigate('/category/updateCategory'); // Navigate to the updateCategory route
+        } else {
+            navigate('/category/addCategory'); // Navigate to the addCategory route
+        }
+    };
+
     return (
         <div>
+            <div className='flex justify-end mb-3'>
+                <button className='text-white bg-blue-600 py-1 px-3 rounded-md' onClick={() => handleItemClick(null)}>Add <FontAwesomeIcon icon={faPlus} /></button>
+            </div>
             <div>
                 <div className='flex justify-between items-start flex-col sm:flex-row gap-y-4'>
                     <h1 className='font-bold sm:text-3xl text-2xl'>Available Category</h1>
@@ -127,7 +144,7 @@ const CategoryItems = ({ setCurrentCategory }) => {
                                             }
                                         </td>
                                         <td className='border border-slate-700 px-2'>
-                                            <button className='m-1 bg-green-500 hover:bg-green-600 text-white rounded-md sm:px-4 px-2 py-1' onClick={() => setCurrentCategory(item)}><FontAwesomeIcon icon={faPenToSquare} /></button>
+                                            <button className='m-1 bg-green-500 hover:bg-green-600 text-white rounded-md sm:px-4 px-2 py-1' onClick={() => handleItemClick(item)}><FontAwesomeIcon icon={faPenToSquare} /></button>
                                             <button className='m-1 bg-red-500 hover:bg-red-600 text-white rounded-md sm:px-4 px-2 py-1' onClick={() => deleteCategory(item.id)}><FontAwesomeIcon icon={faTrash} /></button>
                                         </td>
                                     </tr>
