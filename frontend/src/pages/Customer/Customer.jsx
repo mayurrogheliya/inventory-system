@@ -3,8 +3,14 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { CustomerContext } from '../../contexts/CustomerContext';
 import { Country, State, City } from 'country-state-city';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 
-const CustomerForm = ({ currentCustomer, setCurrentCustomer }) => {
+const Customer = () => {
+
+    const { currentCustomer, setCurrentCustomer } = useOutletContext();
+
+    const navigate = useNavigate();
+
     const { customers, addCustomer, updateCustomer } = useContext(CustomerContext);
 
     const [customerItems, setCustomerItems] = useState({
@@ -59,6 +65,7 @@ const CustomerForm = ({ currentCustomer, setCurrentCustomer }) => {
                 gender: currentCustomer.gender || 'Male',
                 image: ''
             });
+
             if (currentCustomer.image) {
                 setImagePreview(`http://localhost:5000/${currentCustomer.image}`);
             } else {
@@ -120,8 +127,10 @@ const CustomerForm = ({ currentCustomer, setCurrentCustomer }) => {
 
         if (currentCustomer?.id) {
             await updateCustomer(currentCustomer.id, formData);
+            navigate('/customer');
         } else {
             await addCustomer(formData);
+            navigate('/customer');
         }
 
         // Reset form after submission
@@ -337,4 +346,4 @@ const CustomerForm = ({ currentCustomer, setCurrentCustomer }) => {
     );
 };
 
-export default CustomerForm;
+export default Customer;
