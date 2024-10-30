@@ -3,8 +3,13 @@
 import axios from 'axios';
 import { useContext, useEffect, useRef, useState } from 'react'
 import { ProductContext } from '../../contexts';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 
-const Product = ({ currentProduct, setCurrentProduct }) => {
+const Product = () => {
+
+    const { currentProduct, setCurrentProduct } = useOutletContext();
+
+    const navigate = useNavigate();
 
     const { addProduct, updateProduct, products } = useContext(ProductContext);
 
@@ -70,8 +75,10 @@ const Product = ({ currentProduct, setCurrentProduct }) => {
 
         if (productItems.id) {
             await updateProduct(currentProduct.id, formData);
+            navigate('/product');
         } else {
             await addProduct(formData);
+            navigate('/product');
         }
 
         setProductItems({ name: '', category: '', price: '', status: 'Active', weight: '', image: '' });
