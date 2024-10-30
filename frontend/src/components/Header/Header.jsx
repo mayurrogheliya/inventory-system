@@ -38,7 +38,7 @@ export const Header = () => {
                     {/* Navigation Links */}
                     <nav className="flex flex-col mt-4 space-y-2 px-4">
                         <NavLink
-                            to=""
+                            to="/category"
                             onClick={toggleSidebar}
                             className={({ isActive }) =>
                                 `block py-2 px-4 rounded ${isActive ? "hover:bg-orange-700" : "hover:bg-gray-100"} transition-colors duration-200 ${isActive ? "bg-orange-700 text-white" : "text-gray-700"}`
@@ -47,7 +47,7 @@ export const Header = () => {
                             Category
                         </NavLink>
                         <NavLink
-                            to="/products"
+                            to="/product"
                             onClick={toggleSidebar}
                             className={({ isActive }) =>
                                 `block py-2 px-4 rounded ${isActive ? "hover:bg-orange-700" : "hover:bg-gray-100"} transition-colors duration-200 ${isActive ? "bg-orange-700 text-white" : "text-gray-700"}`
