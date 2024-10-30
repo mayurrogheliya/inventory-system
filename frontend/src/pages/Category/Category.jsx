@@ -1,9 +1,13 @@
-/* eslint-disable react/prop-types */
-
 import { useContext, useEffect, useRef, useState } from 'react';
 import { CategoryContext } from '../../contexts';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 
-const Category = ({ currentCategory, setCurrentCategory }) => {
+const Category = () => {
+
+    const { currentCategory, setCurrentCategory } = useOutletContext();
+
+    const navigate = useNavigate();
+
     const { addCategories, updateCategory, categorys } = useContext(CategoryContext);
 
     const [categoryItems, setCategoryItems] = useState({ name: '', image: '', status: 'Active' });
@@ -70,8 +74,10 @@ const Category = ({ currentCategory, setCurrentCategory }) => {
 
         if (categoryItems.id) {
             await updateCategory(currentCategory.id, formData);
+            navigate('/category');
         } else {
             await addCategories(formData);
+            navigate('/category');
         }
 
 
