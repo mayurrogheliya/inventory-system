@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import Category from './Category'
-import CategoryItems from './CategoryItems'
 import { CategoryProvider } from '../../contexts';
+import { Outlet } from 'react-router-dom';
 
 const CategoryMain = () => {
 
@@ -9,8 +8,7 @@ const CategoryMain = () => {
     return (
         <div className='lg:m-3 lg:p-2 md:m-4 md:p-3 m-3 p-2'>
             <CategoryProvider>
-                <Category currentCategory={currentCategory} setCurrentCategory={setCurrentCategory} />
-                <CategoryItems setCurrentCategory={setCurrentCategory} />
+                <Outlet context={{ currentCategory, setCurrentCategory }} />
             </CategoryProvider>
         </div>
     )
