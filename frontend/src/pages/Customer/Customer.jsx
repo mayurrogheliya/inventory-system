@@ -139,33 +139,6 @@ const Customer = () => {
         setImagePreview(null);
     };
 
-    useEffect(() => {
-        if (countryOptions.length > 0) {
-            setCustomerItems((prevItems) => ({
-                ...prevItems,
-                country: 'IN', // or another preferred default
-            }));
-        }
-    }, [countryOptions]);
-
-    useEffect(() => {
-        if (stateOptions.length > 0) {
-            setCustomerItems((prevItems) => ({
-                ...prevItems,
-                state: 'GJ', // or another preferred default
-            }));
-        }
-    }, [stateOptions]);
-
-    useEffect(() => {
-        if (cityOptions.length > 0) {
-            setCustomerItems((prevItems) => ({
-                ...prevItems,
-                city: 'Rajkot', // or another preferred default
-            }));
-        }
-    }, [cityOptions]);
-
     const handleOnChange = (e) => {
         const { name, value } = e.target;
 
