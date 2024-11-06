@@ -8,7 +8,7 @@ export const Layout = () => {
             <Header />
 
             {/* Main Content */}
-            <main className="flex-1 bg-gray-50 overflow-y-auto md:ml-48 lg:ml-0">
+            <main className="flex-1 bg-white overflow-y-auto md:ml-48 lg:ml-0">
                 <Outlet />
             </main>
         </div>
