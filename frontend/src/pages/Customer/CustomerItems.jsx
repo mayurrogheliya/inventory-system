@@ -106,109 +106,141 @@ const CustomerItems = () => {
                         </div>
                     </div>
                 </div>
-                <div className='overflow-x-scroll my-2 gap-1'>
-                    <table className='table table-auto border-collapse border border-slate-500 w-full'>
-                        <thead>
+                <div className='overflow-x-auto my-3 sm:rounded-lg'>
+                    <table className='w-full text-sm text-left rtl:text-right text-gray-800 divide-y divide-gray-300'>
+                        <thead className='text-xs text-gray-900 uppercase bg-gray-200'>
                             <tr>
-                                <th className='border border-slate-600'>Name
-                                    <FontAwesomeIcon
-                                        icon={faSort}
-                                        onClick={() => sortingAlgo('name')}
-                                        className='float-end m-1 hover:cursor-pointer bg-gray-200 hover:bg-gray-300 py-1 px-2 rounded-md' />
+                                <th scope='col' className='px-4 py-3'>
+                                    <div className='flex items-center gap-2'>
+                                        Name
+                                        <FontAwesomeIcon
+                                            icon={faSort}
+                                            onClick={() => sortingAlgo('name')}
+                                            className='hover:cursor-pointer' />
+                                    </div>
                                 </th>
-                                <th className='border border-slate-600'>Email
-                                    <FontAwesomeIcon
-                                        icon={faSort}
-                                        onClick={() => sortingAlgo('email')}
-                                        className='float-end m-1 hover:cursor-pointer bg-gray-200 hover:bg-gray-300 py-1 px-2 rounded-md' />
+                                <th scope='col' className='px-4 py-3'>
+                                    <div className='flex items-center gap-2'>
+                                        Email
+                                        <FontAwesomeIcon
+                                            icon={faSort}
+                                            onClick={() => sortingAlgo('email')}
+                                            className='hover:cursor-pointer' />
+                                    </div>
                                 </th>
-                                <th className='border border-slate-600'>Phone
-                                    <FontAwesomeIcon
-                                        icon={faSort}
-                                        onClick={() => sortingAlgo('phone')}
-                                        className='float-end m-1 hover:cursor-pointer bg-gray-200 hover:bg-gray-300 py-1 px-2 rounded-md' />
+                                <th scope='col' className='px-4 py-3'>
+                                    <div className='flex items-center gap-2'>
+                                        Phone
+                                        <FontAwesomeIcon
+                                            icon={faSort}
+                                            onClick={() => sortingAlgo('phone')}
+                                            className='hover:cursor-pointer' />
+                                    </div>
                                 </th>
-                                <th className='border border-slate-600'>Country
-
-                                    <FontAwesomeIcon
-                                        icon={faSort}
-                                        onClick={() => sortingAlgo('country')}
-                                        className='float-end m-1 hover:cursor-pointer bg-gray-200 hover:bg-gray-300 py-1 px-2 rounded-md' />
+                                <th scope='col' className='px-4 py-3'>
+                                    <div className='flex items-center gap-2'>
+                                        Country
+                                        <FontAwesomeIcon
+                                            icon={faSort}
+                                            onClick={() => sortingAlgo('country')}
+                                            className='hover:cursor-pointer' />
+                                    </div>
                                 </th>
-                                <th className='border border-slate-600'>State
-                                    <FontAwesomeIcon
-                                        icon={faSort}
-                                        onClick={() => sortingAlgo('state')}
-                                        className='float-end m-1 hover:cursor-pointer bg-gray-200 hover:bg-gray-300 py-1 px-2 rounded-md' />
+                                <th scope='col' className='px-4 py-3'>
+                                    <div className='flex items-center gap-2'>
+                                        State
+                                        <FontAwesomeIcon
+                                            icon={faSort}
+                                            onClick={() => sortingAlgo('state')}
+                                            className='hover:cursor-pointer' />
+                                    </div>
                                 </th>
-                                <th className='border border-slate-600'>City
-                                    <FontAwesomeIcon
-                                        icon={faSort}
-                                        onClick={() => sortingAlgo('city')}
-                                        className='float-end m-1 hover:cursor-pointer bg-gray-200 hover:bg-gray-300 py-1 px-2 rounded-md' />
+                                <th scope='col' className='px-4 py-3'>
+                                    <div className='flex items-center gap-2'>
+                                        City
+                                        <FontAwesomeIcon
+                                            icon={faSort}
+                                            onClick={() => sortingAlgo('city')}
+                                            className='hover:cursor-pointer' />
+                                    </div>
                                 </th>
-                                <th className='border border-slate-600'>Pincode
-                                    <FontAwesomeIcon
-                                        icon={faSort}
-                                        onClick={() => sortingAlgo('pincode')}
-                                        className='float-end m-1 hover:cursor-pointer bg-gray-200 hover:bg-gray-300 py-1 px-2 rounded-md' />
+                                <th scope='col' className='px-4 py-3'>
+                                    <div className='flex items-center gap-2'>
+                                        Pincode
+                                        <FontAwesomeIcon
+                                            icon={faSort}
+                                            onClick={() => sortingAlgo('pincode')}
+                                            className='hover:cursor-pointer' />
+                                    </div>
                                 </th>
-                                <th className='border border-slate-600'>Occuption
-                                    <FontAwesomeIcon
-                                        icon={faSort}
-                                        onClick={() => sortingAlgo('occupation')}
-                                        className='float-end m-1 hover:cursor-pointer bg-gray-200 hover:bg-gray-300 py-1 px-2 rounded-md' />
+                                <th scope='col' className='px-4 py-3'>
+                                    <div className='flex items-center gap-2'>
+                                        Occuption
+                                        <FontAwesomeIcon
+                                            icon={faSort}
+                                            onClick={() => sortingAlgo('occupation')}
+                                            className='hover:cursor-pointer' />
+                                    </div>
                                 </th>
-                                <th className='border border-slate-600'>DOB</th>
-                                <th className='border border-slate-600'>Gender
-                                    <FontAwesomeIcon
-                                        icon={faSort}
-                                        onClick={() => sortingAlgo('gender')}
-                                        className='float-end m-1 hover:cursor-pointer bg-gray-200 hover:bg-gray-300 py-1 px-2 rounded-md' />
+                                <th scope='col' className='px-4 py-3'>DOB</th>
+                                <th scope='col' className='px-4 py-3'>
+                                    <div className='flex items-center gap-2'>
+                                        Gender
+                                        <FontAwesomeIcon
+                                            icon={faSort}
+                                            onClick={() => sortingAlgo('gender')}
+                                            className='hover:cursor-pointer' />
+                                    </div>
                                 </th>
-                                <th className='border border-slate-600'>Address</th>
-                                <th className='border border-slate-600'>Image</th>
-                                <th className='border border-slate-600 w-40 sm:w-40 md:w-60 lg:w-70 xl:w-80 '>Action</th>
+                                <th scope='col' className='px-4 py-3'>
+                                    Address
+                                </th>
+                                <th scope='col' className='px-4 py-3'>
+                                    Image
+                                </th>
+                                <th className='px-4 py-3'>
+                                    Action
+                                </th>
                             </tr>
                         </thead>
                         {customers.length > 0 ?
-                            <tbody>
-                                {customers.slice(0).reverse().map((item, index) =>
-                                    <tr key={item.id} className={`hover:bg-gray-100 ${index % 2 === 0 ? "bg-gray-50" : "bg-white"}`}>
-                                        <td className='border border-slate-700 sm:px-2 px-1'>
+                            <tbody className='divide-y divide-gray-300'>
+                                {customers.slice(0).reverse().map((item) =>
+                                    <tr key={item.id} className='bg-zinc-50 font-medium hover:bg-gray-100'>
+                                        <td className='px-4 py-2'>
                                             {highlightText(item.name, searchTerm)}
                                         </td>
-                                        <td className='border border-slate-700 sm:px-2 px-1'>
+                                        <td className='px-4 py-2'>
                                             {highlightText(item.email, searchTerm)}
                                         </td>
-                                        <td className='border border-slate-700 sm:px-2 px-1'>
+                                        <td className='px-4 py-2'>
                                             {highlightText(item.phone, searchTerm)}
                                         </td>
-                                        <td className='border border-slate-700 sm:px-2 px-1'>
+                                        <td className='px-4 py-2'>
                                             {highlightText(item.country, searchTerm)}
                                         </td>
-                                        <td className='border border-slate-700 sm:px-2 px-1'>
+                                        <td className='px-4 py-2'>
                                             {highlightText(item.state, searchTerm)}
                                         </td>
-                                        <td className='border border-slate-700 sm:px-2 px-1'>
+                                        <td className='px-4 py-2'>
                                             {highlightText(item.city, searchTerm)}
                                         </td>
-                                        <td className='border border-slate-700 sm:px-2 px-1'>
+                                        <td className='px-4 py-2'>
                                             {highlightText(item.pincode, searchTerm)}
                                         </td>
-                                        <td className='border border-slate-700 sm:px-2 px-1'>
+                                        <td className='px-4 py-2'>
                                             {highlightText(item.occupation, searchTerm)}
                                         </td>
-                                        <td className='border border-slate-700 sm:px-2 px-1'>
+                                        <td className='px-4 py-2'>
                                             {item.dob ? formatDate(item.dob) : "N/A"}
                                         </td>
-                                        <td className='border border-slate-700 sm:px-2 px-1'>
+                                        <td className='px-4 py-2'>
                                             {highlightText(item.gender, searchTerm)}
                                         </td>
-                                        <td className='border border-slate-700 sm:px-2 px-1'>
+                                        <td className='px-4 py-2'>
                                             {highlightText(item.address, searchTerm)}
                                         </td>
-                                        <td className='border border-slate-700 py-1 sm:px-2 px-1'>
+                                        <td className='px-4 py-2'>
                                             {item.image ? (
                                                 <img className='w-14 h-14 rounded-sm' src={`http://localhost:5000/${item.image}`} alt="Customer" />
                                             )
@@ -218,7 +250,7 @@ const CustomerItems = () => {
                                                 )
                                             }
                                         </td>
-                                        <td className='border border-slate-700 px-2'>
+                                        <td className='px-4 py-2'>
                                             <button className='m-1 bg-green-500 hover:bg-green-600 text-white rounded-md sm:px-4 px-2 py-1' onClick={() => handleItemClick(item)}><FontAwesomeIcon icon={faPenToSquare} /></button>
                                             <button className='m-1 bg-red-500 hover:bg-red-600 text-white rounded-md sm:px-4 px-2 py-1' onClick={() => deleteCustomer(item.id)}><FontAwesomeIcon icon={faTrash} /></button>
                                         </td>

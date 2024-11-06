@@ -101,40 +101,50 @@ const CategoryItems = () => {
                         </div>
                     </div>
                 </div>
-                <div className='overflow-x-scroll my-2 gap-1'>
-                    <table className='table table-auto border-collapse border border-slate-500 w-full'>
-                        <thead>
+                <div className='overflow-x-auto my-3 sm:rounded-lg'>
+                    <table className='w-full text-sm text-left rtl:text-right text-gray-800 divide-y divide-gray-300'>
+                        <thead className='text-xs text-gray-900 uppercase bg-gray-200'>
                             <tr>
-                                <th className='border border-slate-600'>Name
-                                    <FontAwesomeIcon
-                                        icon={faSort}
-                                        onClick={() => sortingAlgo('name')}
-                                        className='float-end m-1 hover:cursor-pointer bg-gray-200 hover:bg-gray-300 py-1 px-2 rounded-md' />
+                                <th scope='col' className='px-4 py-3'>
+                                    <div className='flex items-center gap-2'>
+                                        Name
+                                        <FontAwesomeIcon
+                                            icon={faSort}
+                                            onClick={() => sortingAlgo('name')}
+                                            className='hover:cursor-pointer' />
+                                    </div>
                                 </th>
-                                <th className='border border-slate-600'>Status
-                                    <FontAwesomeIcon
-                                        icon={faSort}
-                                        onClick={() => sortingAlgo('status')}
-                                        className='float-end m-1 hover:cursor-pointer bg-gray-200 hover:bg-gray-300 py-1 px-2 rounded-md' />
+                                <th scope='col' className='px-4 py-3'>
+                                    <div className='flex items-center gap-2'>
+                                        Status
+                                        <FontAwesomeIcon
+                                            icon={faSort}
+                                            onClick={() => sortingAlgo('status')}
+                                            className='hover:cursor-pointer' />
+                                    </div>
                                 </th>
-                                <th className='border border-slate-600'>Image</th>
-                                <th className='border border-slate-600 w-40 sm:w-40 md:w-60 lg:w-70 xl:w-80 '>Action</th>
+                                <th scope='col' className='px-4 py-3'>
+                                    Image
+                                </th>
+                                <th scope='col' className='px-4 py-3'>
+                                    Action
+                                </th>
                             </tr>
                         </thead>
 
                         {categorys.length > 0 ?
-                            <tbody>
-                                {categorys.slice(0).reverse().map((item, index) =>
-                                    <tr key={item.id} className={`hover:bg-gray-100 ${index % 2 === 0 ? "bg-gray-50" : "bg-white"}`}>
-                                        <td className='border border-slate-700 sm:px-2 px-1'>
+                            <tbody className='divide-y divide-gray-300'>
+                                {categorys.slice(0).reverse().map((item) =>
+                                    <tr key={item.id} className='bg-zinc-50 font-medium hover:bg-gray-100'>
+                                        <td className='px-4 py-2'>
                                             {highlightText(item.name, searchTerm)}
                                         </td>
-                                        <td className='border border-slate-700 px-2'>
+                                        <td className='px-4 py-2'>
                                             <span className={`py-1 px-3 rounded-md ${item.status === "Active" ? "text-green-500 font-medium bg-green-100" : "text-red-500 font-medium bg-red-100"}`}>
                                                 {highlightText(item.status, searchTerm)}
                                             </span>
                                         </td>
-                                        <td className='border border-slate-700 py-1 sm:px-2 px-1'>
+                                        <td className='px-4 py-2'>
                                             {item.image ? (
                                                 <img className='w-14 h-14 rounded-sm' src={`http://localhost:5000/${item.image}`} alt="Category" />
                                             )
@@ -144,7 +154,7 @@ const CategoryItems = () => {
                                                 )
                                             }
                                         </td>
-                                        <td className='border border-slate-700 px-2'>
+                                        <td className='px-4 py-2'>
                                             <button className='m-1 bg-green-500 hover:bg-green-600 text-white rounded-md sm:px-4 px-2 py-1' onClick={() => handleItemClick(item)}><FontAwesomeIcon icon={faPenToSquare} /></button>
                                             <button className='m-1 bg-red-500 hover:bg-red-600 text-white rounded-md sm:px-4 px-2 py-1' onClick={() => deleteCategory(item.id)}><FontAwesomeIcon icon={faTrash} /></button>
                                         </td>
