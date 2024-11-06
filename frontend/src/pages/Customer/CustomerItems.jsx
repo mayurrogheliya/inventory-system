@@ -71,6 +71,17 @@ const CustomerItems = () => {
         }
     };
 
+    const formatDate = (dateString) => {
+        if (dateString === '0000-00-00') {
+            return '';
+        }
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+    };
+
     return (
         <div>
             <div className='flex justify-end mb-3'>
@@ -189,7 +200,7 @@ const CustomerItems = () => {
                                             {highlightText(item.occupation, searchTerm)}
                                         </td>
                                         <td className='border border-slate-700 sm:px-2 px-1'>
-                                            {item.dob}
+                                            {item.dob ? formatDate(item.dob) : "N/A"}
                                         </td>
                                         <td className='border border-slate-700 sm:px-2 px-1'>
                                             {highlightText(item.gender, searchTerm)}
