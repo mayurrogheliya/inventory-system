@@ -6,6 +6,7 @@ import { faPenToSquare, faPlus, faSearch, faSort, faTrash } from '@fortawesome/f
 import { ProductContext } from '../../contexts';
 import debounce from 'lodash.debounce';
 import { useNavigate, useOutletContext } from 'react-router-dom';
+import { Pagination } from '../../components/Pagination';
 
 
 const ProductItems = () => {
@@ -184,23 +185,15 @@ const ProductItems = () => {
                     </table>
                 </div>
             </div>
-            <div className='pagination-controls flex justify-center items-center my-4'>
-                <button
-                    className='px-3 py-1 m-1 bg-gray-300 hover:bg-gray-400 rounded'
-                    disabled={pagination.currentPage === 1 ? true : false}
-                    onClick={() => handlePageChange(pagination.currentPage - 1)}
-                >
-                    Previous
-                </button>
-                <span className='px-3'>{pagination.currentPage} of {pagination.totalPages}</span>
-                <button
-                    className='px-3 py-1 m-1 bg-gray-300 hover:bg-gray-400 rounded'
-                    disabled={pagination.currentPage === pagination.totalPages}
-                    onClick={() => handlePageChange(pagination.currentPage + 1)}
-                >
-                    Next
-                </button>
+
+            {/* pagination */}
+            <div className='flex justify-center items-center my-4'>
+                <Pagination
+                    pagination={pagination}
+                    handlePageChange={handlePageChange}
+                />
             </div>
+
         </div >
     )
 }
