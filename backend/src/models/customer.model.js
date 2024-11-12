@@ -1,5 +1,6 @@
 import { DataTypes, Op } from "sequelize";
 import sequelize from "../db/dbConfig.js";
+import Order from "./order.model.js";
 
 const CustomerDetails = sequelize.define(
     "CustomerDetails",
@@ -78,5 +79,7 @@ const CustomerDetails = sequelize.define(
         ],
     }
 );
+
+CustomerDetails.hasMany(Order, { foreignKey: 'customerId' });
 
 export default CustomerDetails;
