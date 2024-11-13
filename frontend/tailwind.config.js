@@ -5,7 +5,12 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        yatra: ['"Yatra One"', 'sans-serif'],
+        arimo: ["Arimo", 'sans-serif']
+      },
+    },
   },
   plugins: [],
 }
