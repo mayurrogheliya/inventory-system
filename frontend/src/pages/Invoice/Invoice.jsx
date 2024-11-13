@@ -5,27 +5,27 @@ const Invoice = () => {
 
             <div className="flex justify-between p-1 text-xs font-semibold">
                 <div>
-                    <table className="table-auto text-left border-collapse">
+                    <table className="table-auto text-left border-collapse text-xs font-bold tracking-widest">
                         <tr>
-                            <td className="font-semibold">UDYAM REG</td>
+                            <td >UDYAM REG</td>
                             <td><span className="px-1">:</span>NO-GJ-10-0001175</td>
                         </tr>
                         <tr>
-                            <td className="font-semibold">GSTIN</td>
+                            <td >GSTIN</td>
                             <td><span className="px-1">:</span>24AALPR4622A1Z1</td>
                         </tr>
                         <tr>
-                            <td className="font-semibold">STATE</td>
+                            <td >STATE</td>
                             <td><span className="px-1">:</span>Gujarat</td>
                         </tr>
                         <tr>
-                            <td className="font-semibold">STATE CODE</td>
+                            <td >STATE CODE</td>
                             <td><span className="px-1">:</span>24</td>
                         </tr>
                     </table>
                 </div>
                 <div className="max-w-80 flex flex-col items-center text-center font-bold">
-                    <h1 className="font-extrabold text-lg">YOGESHWAR BRASS INDUSTRIES</h1>
+                    <h1 className="font-extrabold text-lg    font-yatra">YOGESHWAR BRASS INDUSTRIES</h1>
                     <p>AN ISO 9001 : 2015 CERTIFIED COMPANY</p>
                     <p>
                         PLOT NO - 4684, ROAD NO X, G.I.D.C, PHASE - III, DARED,
@@ -34,49 +34,49 @@ const Invoice = () => {
             </div>
 
             <div className="relative border-y-2 border-black uppercase text-xs flex items-center justify-between">
-                <p className="absolute inset-0 flex justify-center font-semibold">text invoice</p>
-                <p className="ml-auto pr-4 font-normal">original</p>
+                <p className="absolute inset-0 flex justify-center font-bold">text invoice</p>
+                <p className="ml-auto pr-4 font-medium">original</p>
             </div>
 
-            <div className="grid grid-cols-2 text-sm font-semibold">
+            <div className="grid grid-cols-2 text-xs font-medium">
                 <div className="border-b-2 border-r-2 border-black px-1">
-                    <table className="table-auto text-left border-collapse">
+                    <table className="table-auto text-left border-collapse tracking-widest">
                         <tr>
-                            <td className="font-semibold">BILL REG</td>
-                            <td><span className="px-1">:</span>1 / 2024-2025</td>
+                            <td className="font-bold">BILL REG</td>
+                            <td className="font-bold"><span className="px-1">:</span>1 / 2024-2025</td>
                         </tr>
                         <tr>
-                            <td className="font-semibold">BILL DATE</td>
+                            <td className="font-bold">BILL DATE</td>
                             <td><span className="px-1">:</span>14-10-2024</td>
                         </tr>
                         <tr>
-                            <td className="font-semibold">TRANSPORT</td>
+                            <td className="font-bold">TRANSPORT</td>
                             <td><span className="px-1">:</span>TULSI CARGO</td>
                         </tr>
                     </table>
                 </div>
                 <div className="border-b-2 border-black px-1">
-                    <table className="table-auto text-left border-collapse">
+                    <table className="table-auto text-left border-collapse tracking-widest">
                         <tr>
-                            <td className="font-semibold">PLACE OF SUPPLY</td>
+                            <td className="font-bold">PLACE OF SUPPLY</td>
                             <td><span className="px-1">:</span></td>
                         </tr>
                         <tr>
-                            <td className="font-semibold">VEHICLE NO</td>
+                            <td className="font-bold">VEHICLE NO</td>
                             <td><span className="px-1">:</span></td>
                         </tr>
                         <tr>
-                            <td className="font-semibold">LR NO</td>
+                            <td className="font-bold">LR NO</td>
                             <td><span className="px-1">:</span></td>
                         </tr>
                     </table>
 
                 </div>
 
-                <div className="border-b-2 border-r-2 border-black px-1 font-bold">
+                <div className="border-b-2 border-r-2 border-black px-1 font-extrabold  text-base tracking-widest">
                     DETAILS OF RECEIVER / BILLED TO
                 </div>
-                <div className="border-b-2 border-black px-1 font-bold">
+                <div className="border-b-2 border-black px-1 font-extrabold text-base tracking-widest">
                     DETAILS OF CONSIGNEE / SHIPPED TO
                 </div>
 
@@ -88,7 +88,7 @@ const Invoice = () => {
                         </tr>
                         <tr>
                             <td >ADDRESS</td>
-                            <td className="font-normal text-xs"><span className="px-1">:</span>Survey No. 79/20, Village Sarnej, Khandiwala Bus Stop, Narmada Cael Road, Halol Highway Road, Vadodara - 390019, Vadodara, Gujarat, India</td>
+                            <td className="font-medium text-xs"><span className="px-1">:</span>Survey No. 79/20, Village Sarnej, Khandiwala Bus Stop, Narmada Cael Road, Halol Highway Road, Vadodara - 390019, Vadodara, Gujarat, India</td>
                         </tr>
                         <tr>
                             <td >STATE</td>
@@ -112,15 +112,15 @@ const Invoice = () => {
                 <div className="px-2">
                     <table className="table-auto text-left border-collapse">
                         <tr>
-                            <td className="font-semibold">STATE</td>
+                            <td className="font-bold">STATE</td>
                             <td><span className="px-1">:</span>Gujarat</td>
                         </tr>
                         <tr>
-                            <td className="font-semibold">STATE CODE</td>
+                            <td className="font-bold">STATE CODE</td>
                             <td><span className="px-1">:</span>24</td>
                         </tr>
                         <tr>
-                            <td className="font-semibold">GSTIN</td>
+                            <td className="font-bold">GSTIN</td>
                             <td><span className="px-1">:</span></td>
                         </tr>
                     </table>
@@ -194,80 +194,80 @@ const Invoice = () => {
 
             <div className="grid grid-cols-2 text-sm font-semibold">
                 <div className="border-b-2 border-r-2 border-black">
-                    <div className="border-b-2 border-black text-center">
+                    <div className="border-b-2 border-black text-center font-bold text-xs">
                         <p>Total Invoice Amount in Words</p>
                         <p>Seventeen Thousand Seven Hundred</p>
                     </div>
-                    <div className="border-b-2 border-black text-center">
+                    <div className="border-b-2 border-black text-center font-bold text-xs">
                         <p>Bank Details</p>
                     </div>
                     <div className="border-b-2 border-black">
-                        <table className="table-auto text-left border-collapse text-xs font-bold">
+                        <table className="table-auto text-left border-collapse text-xs">
                             <tbody>
                                 <tr>
-                                    <td>Bank Name</td>
+                                    <td className="font-bold">Bank Name</td>
                                     <td><span className="px-1">:</span>PUNJAB NATIONAL BANK</td>
                                 </tr>
                                 <tr>
-                                    <td>Account No</td>
+                                    <td className="font-bold">Account No</td>
                                     <td><span className="px-1">:</span>4115008700000840</td>
                                 </tr>
                                 <tr>
-                                    <td>IFSC Code</td>
+                                    <td className="font-bold">IFSC Code</td>
                                     <td><span className="px-1">:</span>Jamnagar</td>
                                 </tr>
                             </tbody>
                         </table>
 
                     </div>
-                    <div className="flex justify-around">
-                        <div>Due Days: 0 Days</div>
-                        <div>Due Date: 14-10-2024</div>
+                    <div className="flex justify-around text-xs">
+                        <div><span className="font-bold">Due Days</span>: 0 Days</div>
+                        <div><span className="font-bold">Due Date</span>: 14-10-2024</div>
                     </div>
                 </div>
 
                 <div className="border-b-2 border-black">
                     <div className="border-b-2 border-black flex justify-between px-1">
-                        <div>Total Before Tax</div>
+                        <div className="font-bold text-xs">Total Before Tax</div>
                         <div>15000.00</div>
                     </div>
                     <div className="border-b-2 border-black flex justify-between px-1">
-                        <div>CGST</div>
+                        <div className="font-bold text-xs">CGST</div>
                         <div>1350.00</div>
                     </div>
                     <div className="border-b-2 border-black flex justify-between px-1">
-                        <div>SGST</div>
+                        <div className="font-bold text-xs">SGST</div>
                         <div>1350.00</div>
                     </div>
 
                     <div className="border-b-2 border-black flex justify-between px-1">
-                        <div>IGST</div>
+                        <div className="font-bold text-xs">IGST</div>
                         <div>0.00</div>
                     </div>
 
                     <div className="border-b-2 border-black flex justify-between px-1">
-                        <div>Total Tax</div>
+                        <div className="font-bold text-xs">Total Tax</div>
                         <div>2700.00</div>
                     </div>
 
                     <div className="border-b-2 border-black flex justify-between px-1">
-                        <div>Extra Charges</div>
+                        <div className="font-bold text-xs">Extra Charges</div>
                         <div>0.00</div>
                     </div>
 
                     <div className="border-b-2 border-black flex justify-between px-1">
-                        <div>Total After Tax</div>
+                        <div className="font-bold text-xs">Total After Tax</div>
                         <div>17700.00</div>
                     </div>
 
                     <div className="flex justify-between px-1">
-                        <div>GST Payable on Reverse Charge</div>
+                        <div className="font-bold text-xs">GST Payable on Reverse Charge</div>
                         <div>0</div>
                     </div>
                 </div>
             </div>
 
-            <div className="flex justify-between text-sm font-semibold px-2 py-1">
+            <div className="flex justify-between text-xs font-bold px-2 py-1">
                 <div className="flex gap-6">
                     <div>Terms:</div>
                     <div>
