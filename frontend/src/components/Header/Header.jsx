@@ -64,6 +64,15 @@ export const Header = () => {
                         >
                             Customer
                         </NavLink>
+                        <NavLink
+                            to="/invoice"
+                            onClick={toggleSidebar}
+                            className={({ isActive }) =>
+                                `block py-2 px-4 rounded ${isActive ? "hover:bg-orange-700" : "hover:bg-gray-100"} transition-colors duration-200 ${isActive ? "bg-orange-700 text-white" : "text-gray-700"}`
+                            }
+                        >
+                            Invoice
+                        </NavLink>
                     </nav>
 
                     {/* Footer */}
