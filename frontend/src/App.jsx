@@ -9,6 +9,7 @@ import ProductItems from './pages/Product/ProductItems'
 import Product from './pages/Product/Product'
 import CustomerItems from './pages/Customer/CustomerItems'
 import Customer from './pages/Customer/Customer'
+import Invoice from './pages/Invoice/Invoice'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,6 +30,7 @@ const router = createBrowserRouter(
         <Route path='addCustomer' element={<Customer />} />
         <Route path='updateCustomer' element={<Customer />} />
       </Route>
+      <Route path='invoice' element={<Invoice />} />
     </Route>
   )
 )
