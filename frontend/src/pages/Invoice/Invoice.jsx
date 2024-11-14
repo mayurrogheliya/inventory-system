@@ -134,7 +134,7 @@ const Invoice = () => {
                 </div>
 
                 <div className="text-sm font-semibold">
-                    <table className="border border-black w-full" style={{ borderTopWidth: "2.5px", borderBottomWidth: "2.5px" }}>
+                    <table className="border border-black w-full" style={{ borderTopWidth: "3px", borderBottomWidth: "3px" }}>
                         <thead>
                             <tr className="bg-gray-200 text-center">
                                 <th className="border-2 border-black font-bold w-1">Sr No</th>
