@@ -1,9 +1,13 @@
+import { useRef } from "react";
+import { useReactToPrint } from 'react-to-print'
 
 const Invoice = () => {
+    const contentRef = useRef();
+    const reactToPrintFn = useReactToPrint({ contentRef });
+
     return (
         <>
-            <div className="lg:m-3 md:m-4 m-3 border-2 border-black min-h-full">
-
+            <div className="lg:m-3 md:m-4 m-3 border-2 border-black min-h-full" ref={contentRef}>
                 <div className="flex justify-between p-1 text-xs font-semibold">
                     <div>
                         <table className="table-auto text-left border-collapse text-xs font-bold tracking-widest">
@@ -287,9 +291,11 @@ const Invoice = () => {
                 </div>
 
             </div >
+
             <div className="flex justify-center items-center my-5">
-                <button type="button" className="py-1 px-4 bg-blue-600 text-white rounded-md">Print</button>
+                <button type="button" onClick={reactToPrintFn} className="py-1 px-4 bg-blue-600 text-white rounded-md">Print</button>
             </div>
+
         </>
 
     );
