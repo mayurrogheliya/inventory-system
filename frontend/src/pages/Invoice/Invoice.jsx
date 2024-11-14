@@ -166,7 +166,7 @@ const Invoice = () => {
                                 <td className="border-2 border-black text-end pe-1" >18</td>
                                 <td className="border-2 border-black text-end pe-1" >17700.00</td>
                             </tr>
-                            {[...Array(24)].map((_, index) => (
+                            {[...Array(14)].map((_, index) => (
                                 <tr key={index}>
                                     <td className="border-2 border-black text-center">{index + 2}</td>
                                     <td className="border-2 border-black"></td>
