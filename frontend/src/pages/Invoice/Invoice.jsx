@@ -8,8 +8,8 @@ const Invoice = () => {
 
     return (
         <>
-            <div className="lg:m-3 md:m-4 m-3 border-2 border-black min-h-full" ref={contentRef}>
-                <div className="flex justify-between p-1 text-xs font-semibold">
+            <div className="lg:m-3 md:m-4 m-3 min-h-full content" ref={contentRef}>
+                <div className="flex justify-between border-t-2 border-x-2 border-black p-1 text-xs font-semibold">
                     <div>
                         <table className="table-auto text-left border-collapse text-xs font-bold tracking-widest">
                             <tr>
@@ -39,12 +39,12 @@ const Invoice = () => {
                     </div>
                 </div>
 
-                <div className="relative border-y-2 border-black uppercase text-xs flex items-center justify-between">
+                <div className="relative border-2 border-black uppercase text-xs flex items-center justify-between">
                     <p className="absolute inset-0 flex justify-center font-bold">text invoice</p>
                     <p className="ml-auto pr-4 font-medium">original</p>
                 </div>
 
-                <div className="grid grid-cols-2 text-xs font-medium">
+                <div className="grid grid-cols-2 border-x-2 border-black text-xs font-medium">
                     <div className="border-b-2 border-r-2 border-black px-1">
                         <table className="table-auto text-left border-collapse tracking-widest">
                             <tr>
@@ -135,7 +135,7 @@ const Invoice = () => {
                 </div>
 
                 <div className="text-sm font-semibold">
-                    <table className="border border-black w-full" style={{ borderTopWidth: "3px", borderBottomWidth: "3px" }}>
+                    <table className="border border-black w-full" style={{ borderWidth: "3px" }}>
                         <thead>
                             <tr className="bg-gray-200 text-center">
                                 <th className="border-2 border-black font-bold w-1">Sr No</th>
@@ -198,96 +198,98 @@ const Invoice = () => {
                     </table>
                 </div>
 
-                <div className="grid grid-cols-2 text-sm font-semibold">
-                    <div className="border-b-2 border-r-2 border-black">
-                        <div className="border-b-2 border-black text-center font-bold text-xs">
-                            <p>Total Invoice Amount in Words</p>
-                            <p>Seventeen Thousand Seven Hundred</p>
+                <div className="avoid-page-break">
+                    <div className="grid grid-cols-2 border-x-2 border-black text-sm font-semibold">
+                        <div className="border-b-2 border-r-2 border-black">
+                            <div className="border-b-2 border-black text-center font-bold text-xs">
+                                <p>Total Invoice Amount in Words</p>
+                                <p>Seventeen Thousand Seven Hundred</p>
+                            </div>
+                            <div className="border-b-2 border-black text-center font-bold text-xs">
+                                <p>Bank Details</p>
+                            </div>
+                            <div className="border-b-2 border-black">
+                                <table className="table-auto text-left border-collapse text-xs">
+                                    <tbody>
+                                        <tr>
+                                            <td className="font-bold">Bank Name</td>
+                                            <td><span className="px-1">:</span>PUNJAB NATIONAL BANK</td>
+                                        </tr>
+                                        <tr>
+                                            <td className="font-bold">Account No</td>
+                                            <td><span className="px-1">:</span>4115008700000840</td>
+                                        </tr>
+                                        <tr>
+                                            <td className="font-bold">IFSC Code</td>
+                                            <td><span className="px-1">:</span>Jamnagar</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <div className="flex justify-around text-xs">
+                                <div><span className="font-bold">Due Days</span>: 0 Days</div>
+                                <div><span className="font-bold">Due Date</span>: 14-10-2024</div>
+                            </div>
                         </div>
-                        <div className="border-b-2 border-black text-center font-bold text-xs">
-                            <p>Bank Details</p>
-                        </div>
+
                         <div className="border-b-2 border-black">
-                            <table className="table-auto text-left border-collapse text-xs">
-                                <tbody>
-                                    <tr>
-                                        <td className="font-bold">Bank Name</td>
-                                        <td><span className="px-1">:</span>PUNJAB NATIONAL BANK</td>
-                                    </tr>
-                                    <tr>
-                                        <td className="font-bold">Account No</td>
-                                        <td><span className="px-1">:</span>4115008700000840</td>
-                                    </tr>
-                                    <tr>
-                                        <td className="font-bold">IFSC Code</td>
-                                        <td><span className="px-1">:</span>Jamnagar</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div className="border-b-2 border-black flex justify-between px-1">
+                                <div className="font-bold text-xs">Total Before Tax</div>
+                                <div>15000.00</div>
+                            </div>
+                            <div className="border-b-2 border-black flex justify-between px-1">
+                                <div className="font-bold text-xs">CGST</div>
+                                <div>1350.00</div>
+                            </div>
+                            <div className="border-b-2 border-black flex justify-between px-1">
+                                <div className="font-bold text-xs">SGST</div>
+                                <div>1350.00</div>
+                            </div>
 
-                        </div>
-                        <div className="flex justify-around text-xs">
-                            <div><span className="font-bold">Due Days</span>: 0 Days</div>
-                            <div><span className="font-bold">Due Date</span>: 14-10-2024</div>
+                            <div className="border-b-2 border-black flex justify-between px-1">
+                                <div className="font-bold text-xs">IGST</div>
+                                <div>0.00</div>
+                            </div>
+
+                            <div className="border-b-2 border-black flex justify-between px-1">
+                                <div className="font-bold text-xs">Total Tax</div>
+                                <div>2700.00</div>
+                            </div>
+
+                            <div className="border-b-2 border-black flex justify-between px-1">
+                                <div className="font-bold text-xs">Extra Charges</div>
+                                <div>0.00</div>
+                            </div>
+
+                            <div className="border-b-2 border-black flex justify-between px-1">
+                                <div className="font-bold text-xs">Total After Tax</div>
+                                <div>17700.00</div>
+                            </div>
+
+                            <div className="flex justify-between px-1">
+                                <div className="font-bold text-xs">GST Payable on Reverse Charge</div>
+                                <div>0</div>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="border-b-2 border-black">
-                        <div className="border-b-2 border-black flex justify-between px-1">
-                            <div className="font-bold text-xs">Total Before Tax</div>
-                            <div>15000.00</div>
+                    <div className="flex justify-between border-x-2 border-b-2 border-black text-xs font-bold px-2 py-1">
+                        <div className="flex gap-6">
+                            <div>Terms:</div>
+                            <div>
+                                <ol className="list-decimal">
+                                    <li>Payment to be made by A/c Pay Cheque or Draft Only.</li>
+                                    <li>Interest@ 24% Per annum will be charged after due date.</li>
+                                    <li>Any complain for the goods should be made within two days.</li>
+                                    <li>We are not responsible for any loss or damage during transit.</li>
+                                </ol>
+                            </div>
                         </div>
-                        <div className="border-b-2 border-black flex justify-between px-1">
-                            <div className="font-bold text-xs">CGST</div>
-                            <div>1350.00</div>
+                        <div className="flex flex-col justify-between text-center">
+                            <p>For, YOGESHWAR BRASS INDUSTRIES</p>
+                            <p>Authorised Signatory</p>
                         </div>
-                        <div className="border-b-2 border-black flex justify-between px-1">
-                            <div className="font-bold text-xs">SGST</div>
-                            <div>1350.00</div>
-                        </div>
-
-                        <div className="border-b-2 border-black flex justify-between px-1">
-                            <div className="font-bold text-xs">IGST</div>
-                            <div>0.00</div>
-                        </div>
-
-                        <div className="border-b-2 border-black flex justify-between px-1">
-                            <div className="font-bold text-xs">Total Tax</div>
-                            <div>2700.00</div>
-                        </div>
-
-                        <div className="border-b-2 border-black flex justify-between px-1">
-                            <div className="font-bold text-xs">Extra Charges</div>
-                            <div>0.00</div>
-                        </div>
-
-                        <div className="border-b-2 border-black flex justify-between px-1">
-                            <div className="font-bold text-xs">Total After Tax</div>
-                            <div>17700.00</div>
-                        </div>
-
-                        <div className="flex justify-between px-1">
-                            <div className="font-bold text-xs">GST Payable on Reverse Charge</div>
-                            <div>0</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="flex justify-between text-xs font-bold px-2 py-1">
-                    <div className="flex gap-6">
-                        <div>Terms:</div>
-                        <div>
-                            <ol className="list-decimal">
-                                <li>Payment to be made by A/c Pay Cheque or Draft Only.</li>
-                                <li>Interest@ 24% Per annum will be charged after due date.</li>
-                                <li>Any complain for the goods should be made within two days.</li>
-                                <li>We are not responsible for any loss or damage during transit.</li>
-                            </ol>
-                        </div>
-                    </div>
-                    <div className="flex flex-col justify-between text-center">
-                        <p>For, YOGESHWAR BRASS INDUSTRIES</p>
-                        <p>Authorised Signatory</p>
                     </div>
                 </div>
 
