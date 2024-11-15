@@ -24,4 +24,16 @@
     page-break-inside: avoid; /* Prevent page break inside this element */
     break-inside: avoid; /* For additional compatibility */
   }
+
+  .content::after {
+    content: "Continue..."; /* Add the "Continue" text */
+    position: fixed;
+    bottom: 1px;
+    right: 10px;
+    font-size: 9px;
+    font-weight: bold;
+    font-style: italic;
+    color: rgb(80, 80, 80);
+    visibility: visible; /* Make it visible if the content breaks */
+  }
 }

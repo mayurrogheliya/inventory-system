@@ -293,6 +293,7 @@ const Invoice = () => {
                     </div>
                 </div>
 
+                <div className="continue-label hidden">Continue...</div>
             </div >
 
             <div className="flex justify-center items-center my-5">
