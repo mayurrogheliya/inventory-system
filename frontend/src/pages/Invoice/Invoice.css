@@ -18,4 +18,10 @@
   .page-break {
     page-break-before: always;
   }
+
+  .avoid-page-break {
+    border-top: 2px solid black;
+    page-break-inside: avoid; /* Prevent page break inside this element */
+    break-inside: avoid; /* For additional compatibility */
+  }
 }
