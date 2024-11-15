@@ -10,6 +10,7 @@ import Product from './pages/Product/Product'
 import CustomerItems from './pages/Customer/CustomerItems'
 import Customer from './pages/Customer/Customer'
 import Invoice from './pages/Invoice/Invoice'
+import NotFound from './pages/NotFound/notfound'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +32,9 @@ const router = createBrowserRouter(
         <Route path='updateCustomer' element={<Customer />} />
       </Route>
       <Route path='invoice' element={<Invoice />} />
+
+      {/* not found */}
+      <Route path='*' element={<NotFound />} />
     </Route>
   )
 )
