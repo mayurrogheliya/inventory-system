@@ -1,0 +1,21 @@
+@media print {
+  /* Set general margins for the page */
+  @page {
+    margin: 15px; /* Apply margin to all sides */
+  }
+
+  /* Make sure the table header is repeated on each page */
+  thead {
+    display: table-header-group;
+  }
+
+  /* Prevent rows from breaking in the middle */
+  tr {
+    page-break-inside: avoid;
+  }
+
+  /* Add page break before the table when it overflows */
+  .page-break {
+    page-break-before: always;
+  }
+}
