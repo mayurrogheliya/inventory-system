@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { useReactToPrint } from 'react-to-print'
+import './Invoice.css'
 
 const Invoice = () => {
     const contentRef = useRef();
@@ -166,7 +167,7 @@ const Invoice = () => {
                                 <td className="border-2 border-black text-end pe-1" >18</td>
                                 <td className="border-2 border-black text-end pe-1" >17700.00</td>
                             </tr>
-                            {[...Array(14)].map((_, index) => (
+                            {[...Array(34)].map((_, index) => (
                                 <tr key={index}>
                                     <td className="border-2 border-black text-center">{index + 2}</td>
                                     <td className="border-2 border-black"></td>
