@@ -7,7 +7,7 @@ const CustomerReport = async (req, res) => {
     const { customerId } = req.params;
 
     try {
-        let orders;
+        let orders; // variable to store customer data
 
         if (customerId) {
             // Fetch a single customer report by ID
@@ -27,7 +27,7 @@ const CustomerReport = async (req, res) => {
                 return res.status(404).json({ message: 'Customer not found' });
             }
 
-            // Calculate the total amount invested and the order counts
+            // Calculate the total number of orders and total investment
             const totalOrders = orders.length;
             const totalAmountInvested = orders.reduce((acc, order) => acc + parseFloat(order.totalAmount), 0);
 

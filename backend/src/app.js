@@ -19,6 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 // middleware for handling images
 app.use(express.static('public'));
 
+// middleware for routes
 app.use('/api', router);
 
 app.get("/", (req, res) => {

@@ -1,15 +1,18 @@
+// import sequlize library, which is ORM(Object Relational Mapping) for the Node.js to work with SQL databases
 import { Sequelize } from 'sequelize';
 
+// initialize sequelize
 const sequelize = new Sequelize(
-    process.env.DATABASE,
-    'root',
-    '',
+    process.env.DATABASE,   // name of the database
+    'root',     // database username
+    '',     // database password
     {
-        host: process.env.HOST,
-        dialect: process.env.DIALECT
+        host: process.env.HOST, // database host
+        dialect: process.env.DIALECT    // sql dialect
     }
 );
 
+// authenticating the connection to the database
 sequelize.authenticate()
     .then(() => {
 

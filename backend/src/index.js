@@ -10,9 +10,11 @@ dotenv.config({
 
 const port = process.env.PORT || 5000;
 
-Order.associate();
-OrderItem.associate();
+// setting up relationships like foreign keys
+Order.associate();  // Associate Order model with other models
+// OrderItem.associate();  Associate OrderItem model with other models
 
+// Sync Sequelize models with the database, creating or updating tables as necessary
 sequelize.sync()
     .then(() => {
         console.log("All model sync successful");

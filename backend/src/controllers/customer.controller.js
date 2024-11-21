@@ -1,10 +1,13 @@
-import path from 'path';
-import fs from 'fs';
+import path from 'path';    // handle file paths
+import fs from 'fs';    // handle file system operations
 import CustomerDetails from "../models/customer.model.js";
-import { Op } from 'sequelize';
+import { Op } from 'sequelize'; // sequelize operators for querying the database
 
+// function to add new customer
 const addCustomer = async (req, res) => {
     try {
+
+        // file validation to check file type
         if (req.fileValidationError) {
             console.error(req.fileValidationError);
             return res.status(400).json({ message: req.fileValidationError });
@@ -22,6 +25,7 @@ const addCustomer = async (req, res) => {
         const emailToStore = email ? email : null;
         const phoneToStore = phone ? phone : null;
 
+        // create a new customer record in the database
         const newCustomer = await CustomerDetails.create({
             name,
             email: emailToStore,
@@ -67,24 +71,26 @@ const addCustomer = async (req, res) => {
     }
 };
 
+// function to get customers with pagination
 const getCustomers = async (req, res) => {
-    const { page = 1, limit = 5 } = req.query;
+    const { page = 1, limit = 5 } = req.query;  // extract pagination parameters from the query
 
     try {
-        const offset = (page - 1) * limit;
+        const offset = (page - 1) * limit;  // calculate the offset for pagination
 
+        // fetch the customer with pagination
         const customers = await CustomerDetails.findAndCountAll({
             limit: parseInt(limit),
             offset: parseInt(offset),
         });
 
-        const totalPages = Math.ceil(customers.count / limit);
+        const totalPages = Math.ceil(customers.count / limit);  // calculate the total pages
 
-        // Replace null email and phone with empty strings
+        // Replace `null` fields (like email, phone) with empty strings for better readability
         const modifiedCustomers = customers.rows.map(customer => ({
             ...customer.dataValues,
-            email: customer.email || '',  // Replace null email with ''
-            phone: customer.phone || '',    // Replace null phone with ''
+            email: customer.email || '', 
+            phone: customer.phone || '',   
             country: customer.country || '',
             state: customer.state || '',
             city: customer.city || '',
@@ -105,9 +111,10 @@ const getCustomers = async (req, res) => {
     }
 };
 
+// function to delete customer by id
 const deleteCustomer = async (req, res) => {
     try {
-        const customer = await CustomerDetails.findByPk(req.params.id);
+        const customer = await CustomerDetails.findByPk(req.params.id); // find customer by primary key
 
         if (!customer) {
             return res.status(404).json({ message: 'Customer not found' });
@@ -126,6 +133,7 @@ const deleteCustomer = async (req, res) => {
             });
         }
 
+        // delete the customer from the database
         await CustomerDetails.destroy({
             where: { id: req.params.id }
         });
@@ -137,8 +145,16 @@ const deleteCustomer = async (req, res) => {
     }
 };
 
+// function to update customer by id
 const updateCustomer = async (req, res) => {
     try {
+
+        // file validation to check file type
+        if (req.fileValidationError) {
+            console.error(req.fileValidationError);
+            return res.status(400).json({ message: req.fileValidationError });
+        }
+
         const { id } = req.params;
         const { name, email, phone, country, state, city, pincode, occupation, dob, gender, address } = req.body;
 
@@ -198,13 +214,16 @@ const updateCustomer = async (req, res) => {
     }
 };
 
+// function to search customer based on name or status
 const searchCustomer = async (req, res) => {
-    const searchTerm = req.query.q;
+    const searchTerm = req.query.q; // extract the search term from the query
 
     try {
         const results = await CustomerDetails.findAll({
             where: {
+                // search categories using Sequelize's `Op` for case-insensitive matching.
                 [Op.or]: [
+                    // search by name, email, phone, country, state, city, pincode, address, occupation, gender
                     { name: { [Op.like]: `%${searchTerm}%` } },
                     { email: { [Op.like]: `%${searchTerm}%` } },
                     { phone: { [Op.like]: `%${searchTerm}%` } },

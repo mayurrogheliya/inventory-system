@@ -1,10 +1,13 @@
 import ProductDetail from "../models/product.model.js";
-import path from 'path';
-import fs from 'fs';
-import { Op } from "sequelize";
+import path from 'path';    // handle file paths
+import fs from 'fs';    // handle file system operations
+import { Op } from "sequelize"; // sequelize operators for querying the database
 
+// function to add new product
 const addProduct = async (req, res) => {
     try {
+
+        // file validation to check file type
         if (req.fileValidationError) {
             console.error(req.fileValidationError);
             return res.status(400).json({ message: req.fileValidationError });
@@ -36,20 +39,21 @@ const addProduct = async (req, res) => {
     }
 }
 
+// function to get products with pagination
 const getProducts = async (req, res) => {
 
-    const { page = 1, limit = 5 } = req.query;
+    const { page = 1, limit = 5 } = req.query;  // extract pagination parameters from the query
 
     try {
+        const offset = (page - 1) * limit;  // calculate the offset for pagination
 
-        const offset = (page - 1) * limit;
-
+        // fetch the products with pagination
         const products = await ProductDetail.findAndCountAll({
             limit: parseInt(limit),
             offset: parseInt(offset),
         })
 
-        const totalPages = Math.ceil(products.count / limit)
+        const totalPages = Math.ceil(products.count / limit) // calculate the total pages
 
         res.status(200).json({
             data: products.rows,
@@ -57,22 +61,23 @@ const getProducts = async (req, res) => {
             totalPages,
             totalItems: products.count,
         });
-        console.log(products);
     } catch (error) {
         console.log("Error while getting the products", error);
         res.status(500).json({ message: "Error while fetching product" });
     }
 }
 
+// function to delete product by id
 const deleteProduct = async (req, res) => {
     try {
+        // find the product by primary key
         const product = await ProductDetail.findByPk(req.params.id);
 
         if (!product) {
             res.status(404).json({ message: "Product not found" });
         }
 
-        // Delete the product image
+        // delete the image file if exists
         if (product.image) {
             const imagePath = path.join(process.cwd(), 'public', product.image);
 
@@ -85,6 +90,7 @@ const deleteProduct = async (req, res) => {
             });
         }
 
+        // delete the product from the database
         const deleteProduct = await ProductDetail.destroy({
             where: {
                 id: req.params.id,
@@ -92,31 +98,35 @@ const deleteProduct = async (req, res) => {
         });
 
         res.status(200).json({ message: "Successfully deleted product" });
-        console.log(deleteProduct);
-        console.log(`Product with id ${deleteProduct.id} deleted successfully`);
     } catch (error) {
         res.status(500).json({ message: "Internal server error while deleting product", error });
         console.log("Internal server error while deleting product: ", error);
     }
 }
 
+// function to update product by id
 const updateProduct = async (req, res) => {
     try {
+
+        // file validation to check file type
         if (req.fileValidationError) {
             console.error(req.fileValidationError);
             return res.status(400).json({ message: req.fileValidationError });
         }
+
+        // find the product first to ensure it exists
         const product = await ProductDetail.findByPk(req.params.id);
 
         if (!product) {
             return res.status(404).json({ message: "Product not found" });
         }
 
-        let newImagePath = product.image;
+        let newImagePath = product.image;   // use the existing image path by default
 
         if (req.file) {
-            newImagePath = `images/${req.file.filename}`;
+            newImagePath = `images/${req.file.filename}`;   // update existing image path with the new image path
 
+            // delete the old image if it exists 
             if (product.image) {
                 const oldImagePath = path.join(process.cwd(), 'public', product.image);
 
@@ -139,29 +149,34 @@ const updateProduct = async (req, res) => {
             image: newImagePath,
         };
 
+        // update product with the new product
         await product.update(updateData);
 
         res.status(200).json({ message: "Product updated successfully", product });
-        console.log(product);
     } catch (error) {
         console.error("Product update failed", error);
         res.status(500).json({ message: "Product update failed", error });
     }
 }
 
+// function to search product based on name or status
 const searchProduct = async (req, res) => {
-    const searchTerm = req.query.q;
+    const searchTerm = req.query.q; // extract the search term from the query
 
     try {
         const results = await ProductDetail.findAll({
             where: {
+                // search categories using Sequelize's `Op` for case-insensitive matching.
                 [Op.or]: [
+                    // search by product name
                     {
                         name: { [Op.like]: `%${searchTerm}%` },
                     },
+                    // search by category
                     {
                         category: { [Op.like]: `%${searchTerm}%` },
                     },
+                    // search by product status
                     {
                         status: { [Op.like]: `%${searchTerm}%` },
                     },

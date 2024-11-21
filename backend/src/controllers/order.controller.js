@@ -3,6 +3,7 @@ import Order from '../models/order.model.js';
 import OrderItem from '../models/orderItem.model.js';
 import ProductDetail from '../models/product.model.js'
 
+// function to create new order 
 const createOrder = async (req, res) => {
     const { customerId, items } = req.body; // items = [{ productId, quantity, price (optional) }]
 
@@ -23,8 +24,8 @@ const createOrder = async (req, res) => {
                     throw new Error(`Product ID ${item.productId} not found`);
                 }
 
+                // use provided price if available, otherwise use product's default price
                 const price = item.price || product.price;
-
                 const itemTotal = price * item.quantity;
                 totalAmount += itemTotal;
 
@@ -47,6 +48,7 @@ const createOrder = async (req, res) => {
             orderItems.map((item) => ({ ...item, orderId: order.id }))
         );
 
+        // fetch order details with customer and product information
         const orderDetails = await Order.findOne({
             where: { id: order.id },
             include: [
@@ -99,6 +101,7 @@ const createOrder = async (req, res) => {
     }
 }
 
+// function to get order(s)
 const getOrder = async (req, res) => {
     const { orderId } = req.params;
 
@@ -212,6 +215,7 @@ const getOrder = async (req, res) => {
     }
 }
 
+// function to delete order
 const deleteOrder = async (req, res) => {
     const { orderId } = req.params;
 
@@ -245,6 +249,7 @@ const deleteOrder = async (req, res) => {
     }
 }
 
+// function to update order
 const updateOrder = async (req, res) => {
     const { orderId } = req.params;
     const { items } = req.body; // items = [{ productId, quantity, price (optional) }]
