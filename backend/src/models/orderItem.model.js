@@ -6,6 +6,7 @@ import ProductDetail from "./product.model.js";
 const OrderItem = sequelize.define(
     'OrderItem',
     {
+        // foreign key referencing the Order model
         orderId: {
             type: DataTypes.INTEGER,
             references: {
@@ -14,6 +15,7 @@ const OrderItem = sequelize.define(
             },
             allowNull: false
         },
+        // foreign key referencing the ProductDetail model
         productId: {
             type: DataTypes.INTEGER,
             references: {
@@ -33,6 +35,7 @@ const OrderItem = sequelize.define(
     }
 );
 
+// Associations: Define the relationships between models
 OrderItem.associate = () => {
     OrderItem.belongsTo(Order, { foreignKey: 'orderId', as: 'Orders' });
     OrderItem.belongsTo(ProductDetail, { foreignKey: 'productId', as: 'ProductDetails' });

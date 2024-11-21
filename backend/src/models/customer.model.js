@@ -1,9 +1,10 @@
 import { DataTypes, Op } from "sequelize";
-import sequelize from "../db/dbConfig.js";
-import Order from "./order.model.js";
+import sequelize from "../db/dbConfig.js";  // database configuration
+import Order from "./order.model.js";   // import order model for associations
 
+// define the CustomerDetails model
 const CustomerDetails = sequelize.define(
-    "CustomerDetails",
+    "CustomerDetails",  // name of the model, which are corresponds to the database table
     {
         name: {
             type: DataTypes.STRING,
@@ -57,6 +58,7 @@ const CustomerDetails = sequelize.define(
         }
     },
     {
+        // Indexes are created to ensure unique values for email and phone where they are not null
         indexes: [
             {
                 unique: true,
@@ -80,6 +82,7 @@ const CustomerDetails = sequelize.define(
     }
 );
 
+// define association: A customer can have many orders
 CustomerDetails.hasMany(Order, { foreignKey: 'customerId' });
 
 export default CustomerDetails;

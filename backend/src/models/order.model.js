@@ -6,7 +6,7 @@ import OrderItem from "./orderItem.model.js";
 const Order = sequelize.define(
     'Order',
     {
-        customerId: {
+        customerId: {   // Foreign key referencing the CustomerDetails model
             type: DataTypes.INTEGER,
             references: {
                 model: 'CustomerDetails',
@@ -29,12 +29,16 @@ const Order = sequelize.define(
     }
 );
 
+// Associations: Define the relationships between models
 Order.associate = () => {
+    // order belongs to a customer (one-to-many relationship)
     Order.belongsTo(CustomerDetails, {
         foreignKey: 'customerId',
         as: 'CustomerDetails'
     }),
+        // order has many order items(one - to - many relationship)
         Order.hasMany(OrderItem, { foreignKey: 'orderId', onDelete: 'CASCADE' });
+        // Cascade delete: if an order is deleted, its related order items are also deleted
 }
 
 export default Order;
